@@ -29,7 +29,7 @@ class OnBoardingviewbody extends StatelessWidget {
           top: 742.h,
           left: 27.w,
           child: TextButton(
-              onPressed: () => Navigator.pushReplacementNamed(context, '/splash'),
+              onPressed: () => Navigator.pushReplacementNamed(context, '/welcome'),
               child: Text(
                 'Skip',
                 style: TextStyle(
@@ -52,7 +52,7 @@ class OnBoardingviewbody extends StatelessWidget {
                   curve: Curves.easeOutCirc,
                 );
               } else {
-                Navigator.pushReplacementNamed(context, '/splash');
+                Navigator.pushReplacementNamed(context, '/welcome');
               }
             }
           },
