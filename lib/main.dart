@@ -26,7 +26,7 @@ class EgyCal extends StatelessWidget {
           initialRoute: '/splash',
           routes: {
             '/splash': (context) => const SplashScreen(),
-            '/onboarding': (context) => OnBoardingView(),
+            '/onboarding': (context) => const OnBoardingView(),
           },
         );
       },
