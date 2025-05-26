@@ -1,3 +1,4 @@
+import 'package:egycal/features/on_boarding/widgets/onboarding_body.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardingView extends StatelessWidget {
@@ -6,7 +7,7 @@ class OnBoardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body:Scaffold()
+        body:OnBoardingviewbody()
     );
   }
 }

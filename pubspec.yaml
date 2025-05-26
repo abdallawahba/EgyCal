@@ -10,6 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_screenutil: ^5.9.3
+  smooth_page_indicator: ^1.2.1
+  flutter_svg: ^2.1.0
 
   cupertino_icons: ^1.0.8
 
