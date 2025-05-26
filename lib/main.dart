@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'features/on_boarding/onboarding_screen.dart';
 import 'features/splash/splash_screen.dart';
+import 'features/welcome/welcome_screen.dart';
 
 void main() {
   runApp(const EgyCal());
@@ -27,6 +28,7 @@ class EgyCal extends StatelessWidget {
           routes: {
             '/splash': (context) => const SplashScreen(),
             '/onboarding': (context) => const OnBoardingView(),
+            '/welcome': (context) => const Welcome(),
           },
         );
       },

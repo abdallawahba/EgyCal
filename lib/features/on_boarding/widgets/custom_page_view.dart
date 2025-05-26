@@ -33,10 +33,7 @@ class CustomPageview extends StatelessWidget {
               )
             ],
           ),
-
-
         ),
-
       ],
     );
   }
