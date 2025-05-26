@@ -14,19 +14,19 @@ class CustomPageview extends StatelessWidget {
             controller: controller,
             children: [
               PageViewitem(
-                image: 'assets/images/Onboarding Illustrations (1).svg',
+                image: 'assets/images/illustrations_1.svg',
                 tittle: 'Welcome!',
                 subtittle:
                 '  Congratulations on taking the \nfirst step toward a healthier you!',
               ),
               PageViewitem(
-                image: 'assets/images/Onboarding Illustrations (2).svg',
+                image: 'assets/images/illustrations_2.svg',
                 tittle: 'Effortless Tracking',
                 subtittle:
                 ' Easily log your meals, snacks \n         and water intake',
               ),
               PageViewitem(
-                image: 'assets/images/Onboarding Illustrations (3).svg',
+                image: 'assets/images/illustrations_3.svg',
                 tittle: 'Goal Setting',
                 subtittle:
                 'Set realistic goals and watch \n        your progress unfold',
