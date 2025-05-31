@@ -18,7 +18,7 @@ class NextCustomButton extends StatelessWidget {
               onPressed: ()=>onPressedFun(),
               style: ElevatedButton.styleFrom(
                 shape: CircleBorder(),
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(20.r),
                 backgroundColor: kPrimaryColor,
           ),
           child: Icon(

@@ -1,5 +1,5 @@
 //import 'package:egycal/features/login/login_screen.dart';
-//import 'package:egycal/features/sign_up/sign_up_page_1.dart';
+//import 'package:egycal/features/sign_up_with_email/sign_up_page_1.dart';
 import 'package:egycal/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -72,21 +72,27 @@ class Welcome extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("don't have an account ?",
+                Text('don\'t have an account ?',
                   style: TextStyle(
                     fontFamily: kInterFont,
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: kSubTittlesColor
-                  ),),
-                TextButton(onPressed: (){
-                  Navigator.pushNamed(context, '/splash');
-                }, child: Text('sign up ', style: TextStyle(
-                  fontFamily: kInterFont,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: kSecondaryColor,
-                ),)),
+                  ),
+                ),
+                TextButton(
+                    onPressed: (){
+                     Navigator.pushNamed(context, '/signUpWithEmail');
+                    },
+                    child: Text('sign up ',
+                    style: TextStyle(
+                      fontFamily: kInterFont,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: kSecondaryColor,
+                ),
+                    ),
+                ),
               ],
             ),
           ),
