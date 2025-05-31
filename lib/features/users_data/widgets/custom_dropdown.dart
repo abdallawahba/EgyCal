@@ -7,7 +7,7 @@ class CustomDropdown extends StatefulWidget {
   final List<int> items;
   final String? Function(int?)? validator;
   final void Function(int?)? onChanged;
-  final bool enabled; // Added to allow disabling
+  final bool enabled;
 
   const CustomDropdown({
     super.key,
@@ -16,7 +16,7 @@ class CustomDropdown extends StatefulWidget {
     required this.items,
     this.validator,
     this.onChanged,
-    this.enabled = true, // Default to true
+    this.enabled = true,
   });
 
   @override
@@ -26,21 +26,19 @@ class CustomDropdown extends StatefulWidget {
 class _CustomDropdownState extends State<CustomDropdown> {
   @override
   Widget build(BuildContext context) {
-    // Use a slightly different border color or opacity for disabled state for better UX
     Color borderColor = widget.enabled ? Colors.grey : Colors.grey.withOpacity(0.5);
     TextStyle labelStyle = TextStyle(
         color: widget.enabled ? Colors.black54 : Colors.grey.withOpacity(0.7));
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: PhysicalModel(
-        color: widget.enabled ? Colors.white : Colors.grey.shade200, // Visual cue for disabled
+        color: widget.enabled ? Colors.white : Colors.grey.shade200,
         borderRadius: BorderRadius.circular(10),
-        elevation: widget.enabled ? 4 : 0, // No shadow if disabled
+        elevation: widget.enabled ? 4 : 0,
         shadowColor: Colors.grey,
         child: SizedBox(
           width: 200,
-          height: 35, // Adjusted height slightly to better fit content with common font sizes
+          height: 35,
           child: DropdownButtonFormField<int>(
             isDense: true,
             isExpanded: true,
@@ -51,15 +49,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
             dropdownColor: Colors.white,
             value: widget.value,
             decoration: InputDecoration(
-
               labelText: widget.labelText,
               labelStyle: labelStyle,
-              errorStyle: const TextStyle(fontSize: 0, height: 0), // Hide error text, border shows error
+              errorStyle: const TextStyle(fontSize: 0, height: 0),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(width: 1, color: borderColor),
                 borderRadius: BorderRadius.circular(8),
               ),
-              focusedBorder: OutlineInputBorder( // Added for consistency when focused
+              focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(width: 1.5, color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -67,15 +64,15 @@ class _CustomDropdownState extends State<CustomDropdown> {
                 borderSide: const BorderSide(color: Colors.red, width: 1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              focusedErrorBorder: OutlineInputBorder( // Added for consistency when focused with error
+              focusedErrorBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.red, width: 1.5),
                 borderRadius: BorderRadius.circular(8),
               ),
-              disabledBorder: OutlineInputBorder( // Border for disabled state
+              disabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(width: 1, color: Colors.grey.withOpacity(0.5)),
                 borderRadius: BorderRadius.circular(8),
               ),
-              contentPadding: EdgeInsets.symmetric(vertical: 8.r, horizontal: 10.r), // Adjusted padding
+              contentPadding: EdgeInsets.symmetric(vertical: 8.r, horizontal: 10.r),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             ),
             items: widget.items.map((int itemValue) {
@@ -84,8 +81,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
                 child: Text(itemValue.toString()),
               );
             }).toList(),
-            onChanged: widget.enabled ? widget.onChanged : null, // Disable onChanged if not enabled
-            validator: widget.enabled ? widget.validator : null, // Disable validator if not enabled
+            onChanged: widget.enabled ? widget.onChanged : null,
+            validator: widget.enabled ? widget.validator : null,
           ),
         ),
       ),
