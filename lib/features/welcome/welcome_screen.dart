@@ -1,5 +1,3 @@
-//import 'package:egycal/features/login/login_screen.dart';
-//import 'package:egycal/features/sign_up_with_email/sign_up_page_1.dart';
 import 'package:egycal/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,11 +54,26 @@ class Welcome extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 24,vertical: 12)
 
                 ),
-                child: Text('Start',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: kInterFont,
-                    fontSize: 16,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 43.r),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.network(
+                          'http://pngimg.com/uploads/google/google_PNG19635.png',
+                          fit:BoxFit.cover
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 4.r),
+                        child: Text('Sign-in with Google',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: kInterFont,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 )
             ),
@@ -72,7 +85,7 @@ class Welcome extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('don\'t have an account ?',
+                Text('Sign up using email ?',
                   style: TextStyle(
                     fontFamily: kInterFont,
                     fontSize: 16,
@@ -84,13 +97,17 @@ class Welcome extends StatelessWidget {
                     onPressed: (){
                      Navigator.pushNamed(context, '/signUpWithEmail');
                     },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.only(left: 5.r),
+                      minimumSize: Size(0,0),
+                    ),
                     child: Text('sign up ',
                     style: TextStyle(
                       fontFamily: kInterFont,
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                       color: kSecondaryColor,
-                ),
+                      ),
                     ),
                 ),
               ],
