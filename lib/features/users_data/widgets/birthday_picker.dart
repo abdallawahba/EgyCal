@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import '../../../core/models/user_data_model.dart';
 import 'custom_dropdown.dart'; // Import your CustomDropdown
 
 class BirthdayPickerWidget extends StatefulWidget {
@@ -86,6 +88,7 @@ class BirthdayPickerWidgetState extends State<BirthdayPickerWidget> {
               items: _yearItems,
               onChanged: (newValue) {
                 setState(() {
+                  Provider.of<UserDataModel>(context,listen: false).saveYear(newValue);
                   selectedYear = newValue;
                   _updateDayItems();
                 });
@@ -98,6 +101,7 @@ class BirthdayPickerWidgetState extends State<BirthdayPickerWidget> {
               items: _monthItems,
               onChanged: (newValue) {
                 setState(() {
+                  Provider.of<UserDataModel>(context,listen: false).saveMonth(newValue);
                   selectedMonth = newValue;
                   _updateDayItems();
                 });
@@ -111,6 +115,7 @@ class BirthdayPickerWidgetState extends State<BirthdayPickerWidget> {
               enabled: isDayDropdownEnabled,
               onChanged: (newValue) {
                 setState(() {
+                  Provider.of<UserDataModel>(context,listen: false).saveDay(newValue);
                   selectedDay = newValue;
                 });
               },

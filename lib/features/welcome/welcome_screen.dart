@@ -1,6 +1,9 @@
 import 'package:egycal/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import '../../core/models/user_data_model.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -8,6 +11,7 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Positioned(
@@ -38,14 +42,15 @@ class Welcome extends StatelessWidget {
                   fontFamily: kInterFont,
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
-                  color: kSubTittlesColor
+                  color: kSubTitlesColor
               ),),
           ),
           Positioned(
-            bottom: 115.h,
+            bottom: 190.h,
             left: 25.w,
             child: ElevatedButton(onPressed: (){
-              Navigator.pushNamed(context, '/splash');
+              Navigator.pushNamed(context, '/NameAndBirthDate');
+              Provider.of<UserDataModel>(context, listen: false).usingGoogle = true;
             },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: kPrimaryColor,
@@ -59,9 +64,12 @@ class Welcome extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.network(
-                          'http://pngimg.com/uploads/google/google_PNG19635.png',
-                          fit:BoxFit.cover
+                      SizedBox(
+                        height: 30.h,
+                        width: 30.h,
+                        child: Image.asset(
+                            'assets/images/google_logo.png',
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 4.r),
@@ -79,6 +87,31 @@ class Welcome extends StatelessWidget {
             ),
           ),
           Positioned(
+            bottom: 115.h,
+            left: 25.w,
+            child: ElevatedButton(onPressed: (){
+              Navigator.pushNamed(context, '/logInWithEmail');
+              Provider.of<UserDataModel>(context, listen: false).usingGoogle = true;
+            },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: kSecondaryColor,
+                    shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    fixedSize: Size(312, 52),
+                    padding: EdgeInsets.symmetric(horizontal: 24,vertical: 12)
+
+                ),
+                child: Center(
+                  child: Text('Log in using email',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: kInterFont,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+            ),
+          ),
+          Positioned(
             bottom: 45.h,
             left: 0,
             right: 0,
@@ -90,7 +123,7 @@ class Welcome extends StatelessWidget {
                     fontFamily: kInterFont,
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
-                    color: kSubTittlesColor
+                    color: kSubTitlesColor
                   ),
                 ),
                 TextButton(
