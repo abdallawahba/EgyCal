@@ -1,10 +1,14 @@
 import 'package:egycal/core/helper.dart';
-import 'package:egycal/core/widgets/custom_elevated_button.dart';
+import 'package:egycal/core/models/user_data_model.dart';
+import 'package:egycal/core/widgets/custom_navigation_button.dart';
+import 'package:egycal/core/widgets/custom_text.dart';
 import 'package:egycal/core/widgets/custom_text_field.dart';
 import 'package:egycal/features/users_data/widgets/birthday_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:egycal/core/constants.dart';
+import 'package:provider/provider.dart';
 
 class NameAndBirthDate extends StatefulWidget {
   const NameAndBirthDate({super.key});
@@ -84,61 +88,71 @@ class _NameAndBirthDateState extends State<NameAndBirthDate> with WidgetsBinding
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        toolbarHeight: 60,
-        title: const Text(
-          'Create an account',
-          style: TextStyle(fontSize: 20),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Form(
           key: _formKey,
-          child: Padding(
-            padding: EdgeInsets.only(left: 20.r, right: 20.r),
-            child: SingleChildScrollView(
-                controller: _scrollController,
-                physics: _currentPhysics,
-                dragStartBehavior: DragStartBehavior.start,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 15.r, right: 15.r, top: MediaQuery.of(context).viewInsets.bottom > 0 ? 10.r:120.r),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomTextField(
-                        textEditingController: _firstNameController,
-                        focusNode: _firstNameFocusNode,
-                        hintText: 'First name',
-                        obscureText: false,
-                        textInputAction: TextInputAction.next,
-                        onSubmitted: (value) {
-                          FocusScope.of(context).requestFocus(_lastNameFocusNode);
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your first name';
-                          }
-                          return null;
-                        },
+          child: SingleChildScrollView(
+              controller: _scrollController,
+              physics: _currentPhysics,
+              dragStartBehavior: DragStartBehavior.start,
+              child: Padding(
+                padding: EdgeInsets.only(left: 30.r, right: 30.r, top: 80.r),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                        title: 'Enter your name and birth date',
+                        description: 'Tell us a bit about yourself \n            to get started',
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom:15.r, top:35.r),
+                      child: Text(
+                        "Name",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: kTitlesColor,
+                        ),
                       ),
-                      const SizedBox(height: 20),
-                      CustomTextField(
+                    ),
+                    CustomTextField(
+                      textEditingController: _firstNameController,
+                      focusNode: _firstNameFocusNode,
+                      hintText: 'First name',
+                      obscureText: false,
+                      textInputAction: TextInputAction.next,
+                      onChanged: (value) {
+                        Provider.of<UserDataModel>(context,listen: false).saveFirstName(value);
+                        FocusScope.of(context).requestFocus(_lastNameFocusNode);
+                      },
+                      onSubmitted: (value) {
+                        Provider.of<UserDataModel>(context,listen: false).saveFirstName(value);
+                        _lastNameFocusNode.unfocus();
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your first name';
+                        }
+                        return null;
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top:20.r),
+                      child: CustomTextField(
                         textEditingController: _lastNameController,
                         focusNode: _lastNameFocusNode,
                         hintText: 'Last name',
                         obscureText: false,
                         textInputAction: TextInputAction.done,
+                        onChanged: (value) {
+                            Provider.of<UserDataModel>(context,listen: false).saveLastName(value);
+                          _lastNameFocusNode.unfocus();
+                        },
                         onSubmitted: (value) {
+                          Provider.of<UserDataModel>(context,listen: false).saveLastName(value);
                           _lastNameFocusNode.unfocus();
                         },
                         validator: (value) {
@@ -148,61 +162,50 @@ class _NameAndBirthDateState extends State<NameAndBirthDate> with WidgetsBinding
                           return null;
                         },
                       ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Column(
+                    ),
+                    Padding(
+                      padding:  EdgeInsets.only(top:40.r),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             "Date of birth",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                              color: kTitlesColor,
                             ),
                           ),
-                          const SizedBox(height: 10),
                           BirthdayPickerWidget(key: _birthdayPickerKey),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start, // Ensures full width
-                        children: [
-                        ],
-                      ),
-                      SizedBox(height: 25.h),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: CustomElevatedButton(
-                          buttonName: 'Next',
-                          onPressedFun: () {
-                            if (_formKey.currentState != null &&
-                                _formKey.currentState!.validate()) {
-                              if (_birthdayPickerKey.currentState?.validateSelectedDate() ?? false) {
-                                _formKey.currentState!.save();
-                                Navigator.pushNamed(context, '/splash'); // Go back to the login page
-                              } else {
-                                showCustomSnackBar('Please select a valid date of birth.', context);
-                              }
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 20.r,top: 25.r),
+                      child: NavigationButtons(
+                          onBack: (){Navigator.pop(context);},
+                          onNext: (){if (_formKey.currentState != null &&
+                              _formKey.currentState!.validate()) {
+                            if (_birthdayPickerKey.currentState?.validateSelectedDate() ?? false) {
+                              _formKey.currentState!.save();
+                              Navigator.pushNamed(context, '/goal');
                             } else {
-                              if (_firstNameController.text.isEmpty && _lastNameController.text.isEmpty) {
-                                showCustomSnackBar('Please enter your first and last name.', context);
-                              } else if (_firstNameController.text.isEmpty) {
-                                showCustomSnackBar('Please enter your first name.', context);
-                              } else if (_lastNameController.text.isEmpty) {
-                                showCustomSnackBar('Please enter your last name.', context);
-                              }
+                              showCustomSnackBar('Please select a valid date of birth.', context);
                             }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
-          ),
+                          } else {
+                            if (_firstNameController.text.isEmpty && _lastNameController.text.isEmpty) {
+                              showCustomSnackBar('Please enter your first and last name.', context);
+                            } else if (_firstNameController.text.isEmpty) {
+                              showCustomSnackBar('Please enter your first name.', context);
+                            } else if (_lastNameController.text.isEmpty) {
+                              showCustomSnackBar('Please enter your last name.', context);
+                            }
+                          }}
+                      )
+                    ),
+                  ],
+                ),
+              )),
         ),
       ),
     );

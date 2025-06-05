@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:egycal/core/widgets/custom_elevated_button.dart';
 import 'package:egycal/core/widgets/custom_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../core/constants.dart';
 
-class SignUpWithEmail extends StatefulWidget {
-  const SignUpWithEmail({super.key});
+class LogInWithEmail extends StatefulWidget {
+  const LogInWithEmail({super.key});
 
   @override
-  State<SignUpWithEmail> createState() => _SignUpWithEmailState();
+  State<LogInWithEmail> createState() => _LogInWithEmailState();
 }
 
-class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingObserver {
+class _LogInWithEmailState extends State<LogInWithEmail> with WidgetsBindingObserver {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -19,7 +20,6 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
   ScrollPhysics _currentPhysics = const ClampingScrollPhysics();
   late FocusNode _emailFocusNode;
   late FocusNode _passwordFocusNode;
-  late FocusNode _repeatPasswordFocusNode;
   double _previousBottomInset = 0;
 
   @override
@@ -27,7 +27,6 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
     super.initState();
     _emailFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
-    _repeatPasswordFocusNode = FocusNode();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
@@ -44,7 +43,6 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
     repeatPasswordController.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
-    _repeatPasswordFocusNode.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -72,9 +70,7 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
         }
       });
     }
-    // Keyboard closed
     else if (newBottomInset < _previousBottomInset && newBottomInset == 0) {
-      // Keyboard is now hidden
       if (mounted) {
         setState(() {
           _currentPhysics = const ClampingScrollPhysics();
@@ -104,17 +100,6 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
     }
     return null;
   }
-
-  String? _validateRepeatPassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please repeat your password';
-    }
-    if (value != passwordController.text) {
-      return 'Passwords do not match';
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,9 +109,9 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
         backgroundColor: Colors.white,
         centerTitle: true,
         toolbarHeight: 60,
-        title: const Text(
-          'Create an account',
-          style: TextStyle(fontSize: 20),
+        title: Text(
+          'Log In',
+          style: TextStyle(fontSize: 20.sp),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
@@ -145,7 +130,7 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
               controller: _scrollController,
               physics: _currentPhysics,
               child: Padding(
-                padding: EdgeInsets.only(left: 15.r, right: 15.r, top: 150.r),
+                padding: EdgeInsets.only(left: 15.r, right: 15.r, top: 200.r),
                 child: Column(
                   children: [
                     CustomTextField(
@@ -160,7 +145,7 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
                       obscureText: false,
                       validator: _validateEmail,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 18.h),
                     CustomTextField(
                       textEditingController: passwordController,
                       hintText: "Password",
@@ -168,41 +153,51 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
                       focusNode: _passwordFocusNode,
                       textInputAction: TextInputAction.next,
                       onSubmitted: (value) {
-                        FocusScope.of(context)
-                            .requestFocus(_repeatPasswordFocusNode);
                       },
                       obscureText: true,
                       validator: _validatePassword,
                     ),
-                    const SizedBox(height: 16),
-                    CustomTextField(
-                      textEditingController: repeatPasswordController,
-                      hintText: "Repeat password",
-                      icon: Icons.lock_outline,
-                      focusNode: _repeatPasswordFocusNode,
-                      textInputAction: TextInputAction.done,
-                      onSubmitted: (value) {
-                        _repeatPasswordFocusNode.unfocus();
-                      },
-                      obscureText: true,
-                      validator: _validateRepeatPassword,
+                    SizedBox(height: 2.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Forgot your password ?',
+                          style: TextStyle(
+                              fontFamily: kInterFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: kSubTitlesColor
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: (){
+                            Navigator.pushNamed(context, '/resetPassword');
+                          },
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.only(left: 5.r),
+                            minimumSize: Size(0,0),
+                          ),
+                          child: Text('reset ',
+                            style: TextStyle(
+                              fontFamily: kInterFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: kSecondaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).viewInsets.bottom > 0
                               ? 100.r
-                              : 175.r,
+                              : 210.r,
                           bottom: 15.r),
                       child: CustomElevatedButton(
-                          buttonName: 'Sign Up',
+                          buttonName: 'Log in',
                           onPressedFun: () {
-                            if (_formKey.currentState!.validate()) {
-                              // If the form is valid, display a snackbar or navigate.
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   const SnackBar(content: Text('Processing Data')),
-                              // );
-                              Navigator.pushNamed(context, '/NameAndBirthDate');
-                            }
+                            Navigator.pushNamed(context, '/splash');
                           }
                       ),
                     ),

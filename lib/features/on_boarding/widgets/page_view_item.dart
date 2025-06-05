@@ -39,7 +39,7 @@ class PageViewitem extends StatelessWidget {
             fontFamily: kInterFont,
             fontWeight: FontWeight.normal,
             fontSize: 16,
-            color: kSubTittlesColor,
+            color: kSubTitlesColor,
           ),
         ),
       ],

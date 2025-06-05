@@ -4,10 +4,11 @@ import 'package:egycal/features/on_boarding/widgets/custom_indicator.dart';
 import 'package:egycal/features/on_boarding/widgets/custom_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/shared_preferences.dart';
 
 
-class OnBoardingviewbody extends StatelessWidget {
-  OnBoardingviewbody({super.key});
+class OnBoardingViewBody extends StatelessWidget {
+  OnBoardingViewBody({super.key});
   final PageController _controller = PageController();
   @override
   Widget build(BuildContext context) {
@@ -29,20 +30,23 @@ class OnBoardingviewbody extends StatelessWidget {
           top: 742.h,
           left: 27.w,
           child: TextButton(
-              onPressed: () => Navigator.pushReplacementNamed(context, '/welcome'),
+              onPressed: () async {
+                await setOnboardingSeen();
+                Navigator.pushReplacementNamed(context, '/welcome');
+              },
               child: Text(
                 'Skip',
                 style: TextStyle(
                     fontFamily: kInterFont,
                     fontSize: 16,
-                    color: kSubTittlesColor,
+                    color: kSubTitlesColor,
                     fontWeight: FontWeight.normal
                 ),
               )),
         ),
         NextCustomButton(
           pageController: _controller,
-          onPressedFun: () {
+          onPressedFun: () async {
             if (_controller.positions.isNotEmpty) {
               double currentPage = _controller.page ?? 0;
               if (currentPage < 2) {
@@ -52,6 +56,7 @@ class OnBoardingviewbody extends StatelessWidget {
                   curve: Curves.easeOutCirc,
                 );
               } else {
+                await setOnboardingSeen();
                 Navigator.pushReplacementNamed(context, '/welcome');
               }
             }

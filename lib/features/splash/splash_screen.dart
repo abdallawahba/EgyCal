@@ -1,25 +1,36 @@
 import 'package:egycal/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../core/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
+
   const SplashScreen({super.key});
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
+  bool seenOnBoarding =false;
   @override
   void initState() {
     super.initState();
+    decideNextScreen();
     Timer(
       Duration(seconds: 4),
-          () => Navigator.pushReplacementNamed(
-              context,
-              '/onboarding',
-          ),
+          () {
+            if (!seenOnBoarding){
+                Navigator.pushReplacementNamed(context, '/onboarding',);
+        }
+            else{Navigator.pushReplacementNamed(context, '/welcome',);}
+          }
     );
+  }
+
+  Future<void> decideNextScreen() async {
+    seenOnBoarding = await hasSeenOnboarding();
   }
 
   @override
