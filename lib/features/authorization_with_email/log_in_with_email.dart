@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:egycal/core/widgets/custom_elevated_button.dart';
 import 'package:egycal/core/widgets/custom_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../core/constants.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import '../../core/utils/constants.dart';
+import '../../core/utils/helper.dart';
 
 class LogInWithEmail extends StatefulWidget {
   const LogInWithEmail({super.key});
@@ -21,6 +24,8 @@ class _LogInWithEmailState extends State<LogInWithEmail> with WidgetsBindingObse
   late FocusNode _emailFocusNode;
   late FocusNode _passwordFocusNode;
   double _previousBottomInset = 0;
+  String? _password;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -102,106 +107,126 @@ class _LogInWithEmailState extends State<LogInWithEmail> with WidgetsBindingObse
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        toolbarHeight: 60,
-        title: Text(
-          'Log In',
-          style: TextStyle(fontSize: 20.sp),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => Navigator.pop(context),
-        ),
+    return ModalProgressHUD(
+      inAsyncCall: _isLoading,
+      progressIndicator: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(kSecondaryColor),
+        strokeWidth: 3.0,
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.r),
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              physics: _currentPhysics,
-              child: Padding(
-                padding: EdgeInsets.only(left: 15.r, right: 15.r, top: 200.r),
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      textEditingController: emailController,
-                      hintText: 'Email',
-                      icon: Icons.email,
-                      focusNode: _emailFocusNode,
-                      textInputAction: TextInputAction.next,
-                      onSubmitted: (value) {
-                        FocusScope.of(context).requestFocus(_passwordFocusNode);
-                      },
-                      obscureText: false,
-                      validator: _validateEmail,
-                    ),
-                    SizedBox(height: 18.h),
-                    CustomTextField(
-                      textEditingController: passwordController,
-                      hintText: "Password",
-                      icon: Icons.lock_outline,
-                      focusNode: _passwordFocusNode,
-                      textInputAction: TextInputAction.next,
-                      onSubmitted: (value) {
-                      },
-                      obscureText: true,
-                      validator: _validatePassword,
-                    ),
-                    SizedBox(height: 2.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Forgot your password ?',
-                          style: TextStyle(
-                              fontFamily: kInterFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: kSubTitlesColor
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: (){
-                            Navigator.pushNamed(context, '/resetPassword');
-                          },
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.only(left: 5.r),
-                            minimumSize: Size(0,0),
-                          ),
-                          child: Text('reset ',
+      opacity: 0.2,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          toolbarHeight: 60,
+          title: Text(
+            'Log In',
+            style: TextStyle(fontSize: 20.sp),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.r),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                physics: _currentPhysics,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15.r, right: 15.r, top: 200.r),
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        textEditingController: emailController,
+                        hintText: 'Email',
+                        icon: Icons.email,
+                        focusNode: _emailFocusNode,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (value) {
+                          FocusScope.of(context).requestFocus(_passwordFocusNode);
+                        },
+                        obscureText: false,
+                        validator: _validateEmail,
+                      ),
+                      SizedBox(height: 18.h),
+                      CustomTextField(
+                        textEditingController: passwordController,
+                        hintText: "Password",
+                        icon: Icons.lock_outline,
+                        focusNode: _passwordFocusNode,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (value) {
+                        },
+                        obscureText: true,
+                        validator: _validatePassword,
+                      ),
+                      SizedBox(height: 2.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Forgot your password ?',
                             style: TextStyle(
-                              fontFamily: kInterFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: kSecondaryColor,
+                                fontFamily: kInterFont,
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: kSubTitlesColor
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).viewInsets.bottom > 0
-                              ? 100.r
-                              : 210.r,
-                          bottom: 15.r),
-                      child: CustomElevatedButton(
-                          buttonName: 'Log in',
-                          onPressedFun: () {
-                            Navigator.pushNamed(context, '/splash');
-                          }
+                          TextButton(
+                            onPressed: (){
+                              Navigator.pushNamed(context, '/resetPassword');
+                            },
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.only(left: 5.r),
+                              minimumSize: Size(0,0),
+                            ),
+                            child: Text('reset ',
+                              style: TextStyle(
+                                fontFamily: kInterFont,
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: kSecondaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).viewInsets.bottom > 0
+                                ? 100.r
+                                : 210.r,
+                            bottom: 15.r),
+                        child: CustomElevatedButton(
+                            buttonName: 'Log in',
+                            onPressedFun: () async {
+                              _isLoading = true;
+                              setState(() {});
+                              try {
+                                final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text,
+                                );
+                                Navigator.pushReplacementNamed(context, '/home');
+                              } on FirebaseAuthException catch (e) {
+                                showCustomSnackBar('Invalid credentials', context);
+                              }
+                              _isLoading = false;
+                              setState(() {});
+                            }
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

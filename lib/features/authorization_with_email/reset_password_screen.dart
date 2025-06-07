@@ -1,11 +1,13 @@
-import 'package:egycal/core/helper.dart';
+import 'package:egycal/core/utils/helper.dart';
 import 'package:egycal/core/models/user_data_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:egycal/core/widgets/custom_elevated_button.dart';
 import 'package:egycal/core/widgets/custom_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
-import '../../core/constants.dart';
+import '../../core/utils/constants.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -24,6 +26,7 @@ class _ResetPasswordState extends State<ResetPassword>
   ScrollPhysics _currentPhysics = const ClampingScrollPhysics();
   late FocusNode _emailFocusNode;
   double _previousBottomInset = 0;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -98,71 +101,91 @@ class _ResetPasswordState extends State<ResetPassword>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        toolbarHeight: 60,
-        title: Text(
-          'Reset Password',
-          style: TextStyle(fontSize: 20.sp),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => Navigator.pop(context),
-        ),
+    return ModalProgressHUD(
+      inAsyncCall: _isLoading,
+      progressIndicator: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(kSecondaryColor),
+        strokeWidth: 3.0,
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.r),
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              physics: _currentPhysics,
-              child: Padding(
-                padding: EdgeInsets.only(left: 15.r, right: 15.r, top: 260.r),
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      textEditingController: emailController,
-                      hintText: 'Email',
-                      icon: Icons.email,
-                      focusNode: _emailFocusNode,
-                      textInputAction: TextInputAction.next,
-                      onSubmitted: (value) {},
-                      obscureText: false,
-                      validator: _validateEmail,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).viewInsets.bottom > 0
-                              ? 100.r
-                              : 290.r,
-                          bottom: 15.r),
-                      child: CustomElevatedButton(
-                          buttonName: 'Send Verification Email',
-                          onPressedFun: () {
-                            if (Provider.of<UserDataModel>(context,
-                                    listen: false)
-                                .isDisabled()) {
-                              showCustomSnackBar(
-                                  "You may try again after ${Provider.of<UserDataModel>(context, listen: false).getRemainingTimeUntilThreeMinutesPass(Provider.of<UserDataModel>(context, listen: false).disabled)}",
-                                  context);
-                            } else {
-                              showCustomSnackBar(
-                                  "Verification email has been Sent successfully",
-                                  context);
-                              disable();
-                            }
-                          }),
-                    ),
-                  ],
+      opacity: 0.2,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          toolbarHeight: 60,
+          title: Text(
+            'Reset Password',
+            style: TextStyle(fontSize: 20.sp),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.r),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                physics: _currentPhysics,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15.r, right: 15.r, top: 260.r),
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        textEditingController: emailController,
+                        hintText: 'Email',
+                        icon: Icons.email,
+                        focusNode: _emailFocusNode,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (value) {},
+                        obscureText: false,
+                        validator: _validateEmail,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).viewInsets.bottom > 0
+                                ? 100.r
+                                : 290.r,
+                            bottom: 15.r),
+                        child: CustomElevatedButton(
+                            buttonName: 'Send Verification Email',
+                            onPressedFun: () async {
+                              if (Provider.of<UserDataModel>(context,
+                                      listen: false)
+                                  .isDisabled()) {
+                                showCustomSnackBar(
+                                    "You may try again after ${Provider.of<UserDataModel>(context, listen: false).getRemainingTimeUntilThreeMinutesPass(Provider.of<UserDataModel>(context, listen: false).disabled)}",
+                                    context);
+                              } else {
+                                _isLoading = true;
+                                setState(() {});
+                                  try {
+                                    await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
+                                    showCustomSnackBar("If the email exists, a password reset link has been sent.", context);
+                                    disable();
+                                  } on FirebaseAuthException catch (e) {
+                                    if (e.code == 'too-many-requests') {
+                                      showCustomSnackBar('Too many password reset requests. Please try again later.', context);
+                                    }
+                                  } catch (e) {
+                                    showCustomSnackBar('An unexpected error occurred', context);
+                                  }
+                                  _isLoading = false;
+                                  setState(() {});
+                              }
+                              }
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
