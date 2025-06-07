@@ -1,4 +1,4 @@
-import 'package:egycal/core/helper.dart';
+import 'package:egycal/core/utils/helper.dart';
 import 'package:egycal/core/models/user_data_model.dart';
 import 'package:egycal/core/widgets/custom_navigation_button.dart';
 import 'package:egycal/core/widgets/custom_outlined_button.dart';

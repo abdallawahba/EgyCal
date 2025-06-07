@@ -1,9 +1,7 @@
-import 'package:egycal/core/constants.dart';
+import 'package:egycal/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../core/shared_preferences.dart';
+import '../../core/utils/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
 
@@ -24,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
             if (!seenOnBoarding){
                 Navigator.pushReplacementNamed(context, '/onboarding',);
         }
-            else{Navigator.pushReplacementNamed(context, '/welcome',);}
+            else{Navigator.pushReplacementNamed(context, '/authWrapper',);}
           }
     );
   }

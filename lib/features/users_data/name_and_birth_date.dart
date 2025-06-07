@@ -1,4 +1,4 @@
-import 'package:egycal/core/helper.dart';
+import 'package:egycal/core/utils/helper.dart';
 import 'package:egycal/core/models/user_data_model.dart';
 import 'package:egycal/core/widgets/custom_navigation_button.dart';
 import 'package:egycal/core/widgets/custom_text.dart';
@@ -7,7 +7,7 @@ import 'package:egycal/features/users_data/widgets/birthday_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:egycal/core/constants.dart';
+import 'package:egycal/core/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 class NameAndBirthDate extends StatefulWidget {
@@ -189,6 +189,9 @@ class _NameAndBirthDateState extends State<NameAndBirthDate> with WidgetsBinding
                             if (_birthdayPickerKey.currentState?.validateSelectedDate() ?? false) {
                               _formKey.currentState!.save();
                               Navigator.pushNamed(context, '/goal');
+                              Provider.of<UserDataModel>(context, listen: false).saveFirstName(_firstNameController.text.trim());
+                              Provider.of<UserDataModel>(context, listen: false).saveLastName(_lastNameController.text.trim());
+
                             } else {
                               showCustomSnackBar('Please select a valid date of birth.', context);
                             }

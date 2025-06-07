@@ -111,4 +111,36 @@ class UserDataModel {
   void saveHeight(double? value) => height = value;
   void saveWeight(double? value) => weight = value;
   void saveAvatar(String? value) => avatar = value;
+  Map<String, dynamic> toMap(){
+    return {
+      'email': email,
+      'firstName': firstName,
+      'lastName': lastName,
+      'day': day,
+      'month': month,
+      'year': year,
+      'goal': goal,
+      'gender': gender,
+      'activity': activity,
+      'height': height,
+      'weight': weight,
+      'avatar': avatar,
+    };
+  }
+  void clean(){
+    email = null;
+    firstName = null;
+    lastName = null;
+    day = null;
+    month = null;
+    year = null;
+    goal = null;
+    gender = null;
+    activity = null;
+    height = null;
+    weight = null;
+    avatar = null;
+    disabled = null;
+    usingGoogle = false;
+  }
 }

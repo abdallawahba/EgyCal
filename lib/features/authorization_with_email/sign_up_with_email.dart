@@ -1,9 +1,14 @@
 import 'package:egycal/core/models/user_data_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:egycal/core/widgets/custom_elevated_button.dart';
 import 'package:egycal/core/widgets/custom_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+
+import '../../core/utils/constants.dart';
+import '../../core/utils/helper.dart';
 
 class SignUpWithEmail extends StatefulWidget {
   const SignUpWithEmail({super.key});
@@ -23,6 +28,7 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
   late FocusNode _passwordFocusNode;
   late FocusNode _repeatPasswordFocusNode;
   double _previousBottomInset = 0;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -117,99 +123,118 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> with WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        toolbarHeight: 60,
-        title: const Text(
-          'Create an account',
-          style: TextStyle(fontSize: 20),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => Navigator.pop(context),
-        ),
+    return ModalProgressHUD(
+      inAsyncCall: _isLoading,
+      progressIndicator: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(kSecondaryColor),
+        strokeWidth: 3.0,
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.r),
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              physics: _currentPhysics,
-              child: Padding(
-                padding: EdgeInsets.only(left: 15.r, right: 15.r, top: 150.r),
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      textEditingController: emailController,
-                      hintText: 'Email',
-                      icon: Icons.email,
-                      focusNode: _emailFocusNode,
-                      textInputAction: TextInputAction.next,
-                      onSubmitted: (value) {
-                        Provider.of<UserDataModel>(context, listen: false).saveEmail(value);
-                        Provider.of<UserDataModel>(context, listen: false).usingGoogle = false;
-                        FocusScope.of(context).requestFocus(_passwordFocusNode);
-                      },
-                      onChanged: (value) {
-                        Provider.of<UserDataModel>(context, listen: false).saveEmail(value);
-                        Provider.of<UserDataModel>(context, listen: false).usingGoogle = false;
-                        FocusScope.of(context).requestFocus(_passwordFocusNode);
-                      },
-                      obscureText: false,
-                      validator: _validateEmail,
-                    ),
-                    const SizedBox(height: 16),
-                    CustomTextField(
-                      textEditingController: passwordController,
-                      hintText: "Password",
-                      icon: Icons.lock_outline,
-                      focusNode: _passwordFocusNode,
-                      textInputAction: TextInputAction.next,
-                      onSubmitted: (value) {
-                        FocusScope.of(context)
-                            .requestFocus(_repeatPasswordFocusNode);
-                      },
-                      obscureText: true,
-                      validator: _validatePassword,
-                    ),
-                    const SizedBox(height: 16),
-                    CustomTextField(
-                      textEditingController: repeatPasswordController,
-                      hintText: "Repeat password",
-                      icon: Icons.lock_outline,
-                      focusNode: _repeatPasswordFocusNode,
-                      textInputAction: TextInputAction.done,
-                      onSubmitted: (value) {
-                        _repeatPasswordFocusNode.unfocus();
-                      },
-                      obscureText: true,
-                      validator: _validateRepeatPassword,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).viewInsets.bottom > 0
-                              ? 100.r
-                              : 175.r,
-                          bottom: 15.r),
-                      child: CustomElevatedButton(
-                          buttonName: 'Continue',
-                          onPressedFun: () {
-                            if (_formKey.currentState!.validate()) {
-                              Navigator.pushNamed(context, '/NameAndBirthDate');
-                            }
-                          }
+      opacity: 0.2,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          toolbarHeight: 60,
+          title: const Text(
+            'Create an account',
+            style: TextStyle(fontSize: 20),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.r),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                physics: _currentPhysics,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15.r, right: 15.r, top: 150.r),
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        textEditingController: emailController,
+                        hintText: 'Email',
+                        icon: Icons.email,
+                        focusNode: _emailFocusNode,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (value) {
+                          FocusScope.of(context).requestFocus(_passwordFocusNode);
+                        },
+                        obscureText: false,
+                        validator: _validateEmail,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        textEditingController: passwordController,
+                        hintText: "Password",
+                        icon: Icons.lock_outline,
+                        focusNode: _passwordFocusNode,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (value) {
+                          FocusScope.of(context)
+                              .requestFocus(_repeatPasswordFocusNode);
+                        },
+                        obscureText: true,
+                        validator: _validatePassword,
+                      ),
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        textEditingController: repeatPasswordController,
+                        hintText: "Repeat password",
+                        icon: Icons.lock_outline,
+                        focusNode: _repeatPasswordFocusNode,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (value) {
+                          _repeatPasswordFocusNode.unfocus();
+                        },
+                        obscureText: true,
+                        validator: _validateRepeatPassword,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).viewInsets.bottom > 0
+                                ? 100.r
+                                : 175.r,
+                            bottom: 15.r),
+                        child: CustomElevatedButton(
+                            buttonName: 'Continue',
+                            onPressedFun: () async {
+                              if (_formKey.currentState!.validate()) {
+                                Provider.of<UserDataModel>(context, listen: false).saveEmail(emailController.text.trim());
+                                _isLoading = true;
+                                setState(() {});
+                                try {
+                                  final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                    email: Provider.of<UserDataModel>(context, listen: false).email!,
+                                    password: passwordController.text,
+                                  );
+                                  Provider.of<UserDataModel>(context, listen: false).usingGoogle = false;
+                                  Navigator.pushReplacementNamed(context, '/NameAndBirthDate');
+                                } on FirebaseAuthException catch (e) {
+                                  if (e.code == 'email-already-in-use') {
+                                    showCustomSnackBar('The account already exists for that email.',context);
+                                  }
+                                } catch (e) {
+                                  showCustomSnackBar('Unexpected error has occurred',context);
+                                }
+                                _isLoading = false;
+                                setState(() {});
+                              }
+                            }
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

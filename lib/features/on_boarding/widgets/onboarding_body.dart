@@ -1,10 +1,10 @@
-import 'package:egycal/core/constants.dart';
+import 'package:egycal/core/utils/constants.dart';
 import 'package:egycal/core/widgets/custom_next_button.dart';
 import 'package:egycal/features/on_boarding/widgets/custom_indicator.dart';
 import 'package:egycal/features/on_boarding/widgets/custom_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../core/shared_preferences.dart';
+import '../../../core/utils/shared_preferences.dart';
 
 
 class OnBoardingViewBody extends StatelessWidget {
