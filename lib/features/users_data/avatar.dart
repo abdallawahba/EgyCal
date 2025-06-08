@@ -8,8 +8,9 @@ import 'package:egycal/core/widgets/custom_text.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/models/current_users_data_model.dart';
 import '../../core/utils/helper.dart';
-import '../../core/models/user_data_model.dart';
+import '../../core/models/users_data_model.dart';
 
 class Avatar extends StatefulWidget {
   const Avatar({
@@ -66,6 +67,7 @@ class _AvatarState extends State<Avatar> {
                         }
                         final uid = user.uid;
                         final userData = Provider.of<UserDataModel>(context, listen: false).toMap();
+                        Provider.of<CurrentUserDataModel>(context, listen: false).fetch();
                         await FirebaseFirestore.instance.collection('users').doc(uid).set(userData);
                         Navigator.pushReplacementNamed(context, '/home');
                         Provider.of<UserDataModel>(context, listen: false).clean();

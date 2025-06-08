@@ -4,6 +4,8 @@ import 'package:egycal/core/widgets/custom_elevated_button.dart';
 import 'package:egycal/core/widgets/custom_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
+import '../../core/models/current_users_data_model.dart';
 import '../../core/utils/constants.dart';
 import '../../core/utils/helper.dart';
 
@@ -212,6 +214,7 @@ class _LogInWithEmailState extends State<LogInWithEmail> with WidgetsBindingObse
                               _isLoading = true;
                               setState(() {});
                               try {
+                                Provider.of<CurrentUserDataModel>(context, listen: false).fetch();
                                 final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
                                     email: emailController.text.trim(),
                                     password: passwordController.text,

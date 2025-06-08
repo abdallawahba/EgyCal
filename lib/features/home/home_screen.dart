@@ -1,33 +1,62 @@
-import 'package:egycal/core/utils/constants.dart';
+import 'package:egycal/core/widgets/bottom_nav_bar.dart';
+import 'package:egycal/features/home/widgets/calorie_intake.dart';
+import 'package:egycal/features/home/widgets/cards.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-class HomeScreen extends StatefulWidget {
-
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.white,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/images/logo.png',
-          )
-        ],
+        children: [CalorieIntake(), gridViewCards(context)],
       ),
+      bottomNavigationBar: CustomBottomNavBar(),
     );
+  }
+
+  Flexible gridViewCards(BuildContext context) {
+    return Flexible(
+        child: GridView.count(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.all(20.r),
+            crossAxisCount: 2,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            childAspectRatio: 1,
+            children: [
+              Cards(
+                icon: Icons.fastfood,
+                label: 'Log Food',
+                onTap: () {
+                  Navigator.pushNamed(context, '/logFood');
+                },
+              ),
+              Cards(
+                icon: Icons.bar_chart,
+                label: 'Reports',
+                onTap: () {
+                  Navigator.pushNamed(context, '/reports');
+                },
+              ),
+              Cards(
+                icon: Icons.add_circle_outline,
+                label: 'Add Food',
+                onTap: () {
+                  Navigator.pushNamed(context, '/addFood');
+                },
+              ),
+              Cards(
+                icon: Icons.pie_chart_outline,
+                label: 'Diary',
+                onTap: () {
+                  Navigator.pushNamed(context, '/diary');
+                },
+              ),
+            ]));
   }
 }

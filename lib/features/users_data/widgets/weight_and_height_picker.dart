@@ -1,5 +1,5 @@
 import 'package:egycal/core/utils/constants.dart'; // Assuming kSecondaryColor and kSubTittlesColor are defined here
-import 'package:egycal/core/models/user_data_model.dart';
+import 'package:egycal/core/models/users_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
