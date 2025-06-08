@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../../../core/models/user_data_model.dart';
+import '../../../core/models/users_data_model.dart';
 import 'avatar_widget.dart';
 
 class AvatarsMatrix extends StatefulWidget {

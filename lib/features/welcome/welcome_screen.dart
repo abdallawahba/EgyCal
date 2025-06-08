@@ -7,7 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/models/user_data_model.dart';
+import '../../core/models/users_data_model.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({super.key});

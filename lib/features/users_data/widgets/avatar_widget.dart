@@ -15,6 +15,7 @@ class AvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isAssetImage = image?.startsWith('assets/') ?? false;
     return InkWell(
       onTap: onTap,
       customBorder: const CircleBorder(),
@@ -27,7 +28,7 @@ class AvatarWidget extends StatelessWidget {
         ),
         child: CircleAvatar(
           radius: 50,
-          backgroundImage: image != null ? AssetImage(image!) : null,
+          backgroundImage: image != null ? isAssetImage ? AssetImage(image!) : NetworkImage(image!) : null,
           child: image == null ? const Icon(Icons.person, size: 50) : null,
         ),
       ),

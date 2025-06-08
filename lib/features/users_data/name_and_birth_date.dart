@@ -1,5 +1,5 @@
 import 'package:egycal/core/utils/helper.dart';
-import 'package:egycal/core/models/user_data_model.dart';
+import 'package:egycal/core/models/users_data_model.dart';
 import 'package:egycal/core/widgets/custom_navigation_button.dart';
 import 'package:egycal/core/widgets/custom_text.dart';
 import 'package:egycal/core/widgets/custom_text_field.dart';

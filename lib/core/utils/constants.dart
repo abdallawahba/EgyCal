@@ -1,6 +1,13 @@
+import 'package:egycal/features/add_food/add_food_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../features/diary/diary.dart';
+import '../../features/favorites/favorites.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/log_food/log_food.dart';
+import '../../features/profile/profile.dart';
+import '../../features/reports/reports.dart';
+import '../../features/search/search_page.dart';
 import '/features/on_boarding/on_boarding_screen.dart';
 import '/features/authorization_with_email/log_in_with_email.dart';
 import '/features/authorization_with_email/reset_password_screen.dart';
@@ -23,6 +30,8 @@ Color kSecondaryColor = Color(0xFF337277);
 Color kSubTitlesColor = Color(0xFF6E7179);
 Color kTitlesColor = Color(0xFF0D1220);
 String kInterFont = 'Inter';
+String kRobotoFont = 'Roboto';
+String kCarroisGothicFont = 'Carrois Gothic';
 
 Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
   '/splash': (context) => const SplashScreen(),
@@ -39,6 +48,13 @@ Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
   '/height': (context) => const Height(),
   '/avatar': (context) => const Avatar(),
   '/home': (context) => const HomeScreen(),
+  '/addFood': (context) => const AddFoodPage(),
+  '/favorites': (context) => const FavoritesPage(),
+  '/diary': (context) => const DiaryPage(),
+  '/reports': (context) => const ReportsPage(),
+  '/logFood': (context) => const LogFoodPage(),
+  '/search': (context) => const SearchPage(),
+  '/profile': (context) => const ProfilePage(),
   '/authWrapper': (context) => AuthWrapper(),
 };
 

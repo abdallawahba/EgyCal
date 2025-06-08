@@ -1,4 +1,5 @@
-import 'package:egycal/core/models/user_data_model.dart';
+import 'package:egycal/core/models/current_users_data_model.dart';
+import 'package:egycal/core/models/users_data_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,16 +19,20 @@ class EgyCal extends StatelessWidget {
   const EgyCal({super.key});
   @override
   Widget build(BuildContext context) {
-    UserDataModel usersInfoModel = UserDataModel();
+
+    UserDataModel usersData = UserDataModel();
+    CurrentUserDataModel currentUsersData = CurrentUserDataModel();
+
     return ScreenUtilInit(
       designSize: Size(393, 852),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return Provider(
-          create: (context) {
-            return usersInfoModel;
-          },
+        return MultiProvider(
+          providers: [
+            Provider(create: (_) => usersData),
+            Provider(create: (_) => currentUsersData),
+          ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             initialRoute: '/splash',
