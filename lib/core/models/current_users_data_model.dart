@@ -21,6 +21,7 @@ class CurrentUserDataModel {
   int? remaining;
   int? foodCalories;
   int? age;
+  String? greeting;
 
   CurrentUserDataModel(){
     email = '';
@@ -41,6 +42,7 @@ class CurrentUserDataModel {
     remaining = 0;
     foodCalories = 0;
     age = 0;
+    greeting = '';
   }
 
   void calculateAge() {
@@ -48,6 +50,18 @@ class CurrentUserDataModel {
     age = now.year - year!;
     if (now.month < month! || (now.month == month && now.day < day!)) {
       age = age! - 1;
+    }
+  }
+
+  void getGreeting() {
+    final currentTime = DateTime.now().toUtc().add(const Duration(hours: 3));
+    final hour = currentTime.hour;
+    if (hour >= 5 && hour < 12) {
+      greeting = 'Good morning';
+    } else if (hour >= 12 && hour < 17) {
+      greeting = 'Good afternoon';
+    } else {
+      greeting = 'Good evening';
     }
   }
 
@@ -72,7 +86,7 @@ class CurrentUserDataModel {
       weight = data['weight'];
       avatar = data['avatar'];
       calculateAge();
-
+      getGreeting();
       double? bmr;
       double? activityMultiplier;
       double? calorieAdjustment;
@@ -121,7 +135,7 @@ class CurrentUserDataModel {
       progressPercent = double.parse((foodCalories! / baseGoal!).toStringAsFixed(4));
       remaining = baseGoal! - foodCalories!;
     } catch (e) {
-      throw Exception("Error fetching user data: $e");
+      CurrentUserDataModel();
     }
   }
 
@@ -145,6 +159,7 @@ class CurrentUserDataModel {
       'remaining': remaining,
       'foodCalories': foodCalories,
       'age': age,
+      'greeting': greeting,
     };
   }
 
@@ -167,6 +182,7 @@ class CurrentUserDataModel {
     remaining = null;
     foodCalories = null;
     age = null;
+    greeting = null;
   }
 
 }
