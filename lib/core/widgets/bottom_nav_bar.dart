@@ -13,60 +13,52 @@ class CustomBottomNavBar extends StatelessWidget {
     super.key,
   });
 
+  void _navigate(BuildContext context, int index) {
+    final currentRoute = ModalRoute.of(context)?.settings.name;
+    const routes = ['/home', '/favorites', '/profile'];
+    final newRoute = routes[index];
+    if (currentRoute == newRoute) return;
+    if (newRoute == '/home' && currentRoute == '/authWrapper') return;
+    Navigator.pushReplacementNamed(context, newRoute);
+  }
   @override
   Widget build(BuildContext context) {
+    final currentRoute = ModalRoute.of(context)?.settings.name;
+    int selectedIndex = 0;
+    if (currentRoute == '/favorites') {
+      selectedIndex = 1;
+    } else if (currentRoute == '/profile') {
+      selectedIndex = 2;
+    }
     return ClipRRect(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      ),
       child: GNav(
-          padding: EdgeInsets.all(16.r),
-          backgroundColor: kPrimaryColor,
-          color: Colors.white,
-          activeColor: Colors.white,
-          textStyle: TextStyle(color: Colors.white),
-          tabs: [
-            GButton(
-              gap: 8,
-              icon: Icons.home_outlined,
-              text: 'Home',
-              onPressed: () {
-                final currentRoute = ModalRoute.of(context)?.settings.name;
-                if (currentRoute != '/home' && currentRoute != '/authWrapper') {
-                  Navigator.pushNamed(context, '/home');
-                }
-              },
-            ),
-            GButton(
-              icon: Icons.favorite_outline_outlined,
-              text: 'Favorites',
-              onPressed: () {
-                final currentRoute = ModalRoute.of(context)?.settings.name;
-                if (currentRoute != '/favorites') {
-                  Navigator.pushNamed(context, '/favorites');
-                }
-              },
-            ),
-            GButton(
-              icon: Icons.search,
-              text: 'Search',
-              onPressed: () {
-                final currentRoute = ModalRoute.of(context)?.settings.name;
-                if (currentRoute != '/search') {
-                  Navigator.pushNamed(context, '/search');
-                }
-              },
-            ),
-            GButton(
-              icon: Icons.person_2_outlined,
-              text: 'Profile',
-              onPressed: () {
-                final currentRoute = ModalRoute.of(context)?.settings.name;
-                if (currentRoute != '/profile') {
-                  Navigator.pushNamed(context, '/profile');
-                }
-              },
-            ),
-          ]),
+        selectedIndex: selectedIndex,
+        onTabChange: (index) => _navigate(context, index),
+        padding: EdgeInsets.all(16.r),
+        backgroundColor: kPrimaryColor,
+        color: Colors.white,
+        activeColor: Colors.white,
+        textStyle: const TextStyle(color: Colors.white),
+        tabs: const [
+          GButton(
+            gap: 8,
+            icon: Icons.home_outlined,
+            text: 'Home',
+          ),
+          GButton(
+            icon: Icons.favorite_outline_outlined,
+            text: 'Favorites',
+          ),
+          GButton(
+            icon: Icons.person_2_outlined,
+            text: 'Profile',
+          ),
+        ],
+      ),
     );
   }
 }

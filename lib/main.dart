@@ -19,7 +19,6 @@ class EgyCal extends StatelessWidget {
   const EgyCal({super.key});
   @override
   Widget build(BuildContext context) {
-
     UserDataModel usersData = UserDataModel();
     CurrentUserDataModel currentUsersData = CurrentUserDataModel();
 
