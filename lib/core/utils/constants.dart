@@ -1,13 +1,13 @@
 import 'package:egycal/features/add_food/add_food_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../features/diary/diary.dart';
 import '../../features/favorites/favorites.dart';
 import '../../features/home/home_screen.dart';
-import '../../features/log_food/log_food.dart';
+import '../../features/food/food_details.dart';
+import '../../features/food/log_food.dart';
 import '../../features/profile/profile.dart';
 import '../../features/reports/reports.dart';
-import '../../features/search/search_page.dart';
+import '../models/food_details_model.dart';
 import '/features/on_boarding/on_boarding_screen.dart';
 import '/features/authorization_with_email/log_in_with_email.dart';
 import '/features/authorization_with_email/reset_password_screen.dart';
@@ -53,8 +53,11 @@ Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
   '/diary': (context) => const DiaryPage(),
   '/reports': (context) => const ReportsPage(),
   '/logFood': (context) => const LogFoodPage(),
-  '/search': (context) => const SearchPage(),
   '/profile': (context) => const ProfilePage(),
   '/authWrapper': (context) => AuthWrapper(),
+  '/foodDetails': (context) {
+    final food = ModalRoute.of(context)!.settings.arguments as FoodDetailsModel;
+    return FoodDetailsPage(selectedFood: food);
+  },
 };
 
