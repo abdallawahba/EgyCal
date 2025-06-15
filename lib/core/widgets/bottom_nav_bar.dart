@@ -15,7 +15,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   void _navigate(BuildContext context, int index) {
     final currentRoute = ModalRoute.of(context)?.settings.name;
-    const routes = ['/home', '/favorites', '/profile'];
+    const routes = ['/home', '/favorites', '/addedFood', '/profile'];
     final newRoute = routes[index];
     if (currentRoute == newRoute) return;
     if (newRoute == '/home' && currentRoute == '/authWrapper') return;
@@ -27,8 +27,10 @@ class CustomBottomNavBar extends StatelessWidget {
     int selectedIndex = 0;
     if (currentRoute == '/favorites') {
       selectedIndex = 1;
-    } else if (currentRoute == '/profile') {
+    } else if (currentRoute == '/addedFood') {
       selectedIndex = 2;
+    } else if (currentRoute == '/profile') {
+      selectedIndex = 3;
     }
     return ClipRRect(
       borderRadius: const BorderRadius.only(
@@ -52,6 +54,10 @@ class CustomBottomNavBar extends StatelessWidget {
           GButton(
             icon: Icons.favorite_outline_outlined,
             text: 'Favorites',
+          ),
+          GButton(
+            icon: Icons.add_circle_outline,
+            text: 'Added Food',
           ),
           GButton(
             icon: Icons.person_2_outlined,

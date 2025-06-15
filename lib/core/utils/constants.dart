@@ -1,5 +1,6 @@
 import 'package:egycal/features/add_food/add_food_page.dart';
 import 'package:flutter/material.dart';
+import '../../features/add_food/added_food_page.dart';
 import '../../features/diary/diary.dart';
 import '../../features/favorites/favorites.dart';
 import '../../features/home/home_screen.dart';
@@ -59,5 +60,6 @@ Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
     final food = ModalRoute.of(context)!.settings.arguments as FoodDetailsModel;
     return FoodDetailsPage(selectedFood: food);
   },
+  '/addedFood': (context) => const AddedFoodPage(),
 };
 

@@ -21,7 +21,6 @@ class EgyCal extends StatelessWidget {
   Widget build(BuildContext context) {
     UserDataModel usersData = UserDataModel();
     CurrentUserDataModel currentUsersData = CurrentUserDataModel();
-
     return ScreenUtilInit(
       designSize: Size(393, 852),
       minTextAdapt: true,

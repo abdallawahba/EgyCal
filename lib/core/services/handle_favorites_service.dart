@@ -9,7 +9,7 @@ Future<void> handleFavorites(FoodDetailsModel food) async {
     return;
   }
 
-  final String foodId = food.foodId;
+  final String foodId = food.foodId!;
   final docRef = FirebaseFirestore.instance
       .collection('users')
       .doc(user.uid)
