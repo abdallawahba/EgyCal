@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:egycal/core/services/retrieve_egyptian_food.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../models/food_details_model.dart';
@@ -11,8 +12,14 @@ Future<List<FoodDetailsModel>> searchFood(String searchWord) async {
   final authEncoded = base64Encode(utf8.encode(authString));
   final baseUri = 'https://platform.fatsecret.com/rest/server.api?method=';
 
-  List<FoodDetailsModel> data = [];
+  List<FoodDetailsModel> data = await searchEgyptianFood(searchWord);
+  if (searchWord.isEmpty) {
+    return [];
+  }
 
+  if (data.isNotEmpty ) {
+    return data;
+  }
   final tokenResponse = await http.post(
     Uri.parse('https://oauth.fatsecret.com/connect/token'),
     headers: {

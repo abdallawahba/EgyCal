@@ -27,8 +27,8 @@ class FoodCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  food.engName!.length > 32
-                      ? '${food.engName!.substring(0, 32)}...'
+                  food.engName!.length > 22
+                      ? '${food.engName!.substring(0, 22)}...'
                       : food.engName!,
                   style: TextStyle(
                     color: Colors.white,

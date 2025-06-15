@@ -24,6 +24,8 @@ class _LogFoodPageState extends State<LogFoodPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
         toolbarHeight: 90.h,
         title: Text(
           'Search food',
