@@ -9,54 +9,52 @@ class NutrientBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(12.r),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          rowbuild('${foodDetailsModel.calories}', 'Calories'),
+          rowBuild('${foodDetailsModel.calories}', 'Calories'),
           SizedBox(
             width: 13.w
           ),
-          rowbuild('${foodDetailsModel.proteins}%', 'Proteins'),
+          rowBuild('${foodDetailsModel.proteins}%', 'Proteins'),
           SizedBox(
             width: 13.w,
           ),
-          rowbuild('${foodDetailsModel.fats}%', 'Fats'),
+          rowBuild('${foodDetailsModel.fats}%', 'Fats'),
           SizedBox(
             width: 13.w,
           ),
-          rowbuild('${foodDetailsModel.carbs}%', 'Carbs'),
+          rowBuild('${foodDetailsModel.carbs}%', 'Carbs'),
         ],
       ),
     );
   }
 }
-
-Widget rowbuild(String value,String label) {
+Widget rowBuild(String value,String label) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Container(
-        width: 75,
-        height: 100,
+        width: 80.w,
+        height: 120.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(37),
           color: kPrimaryColor,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 5),
+          padding: EdgeInsets.only(top: 5.r),
           child: Column(
             children: [
               Container(
                 width: 50,
                 height: 50,
-                // color: Colors.white,
                 decoration:
                 BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                 child: Center(
                     child: Text(
                       value,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                     )),
               ),
               SizedBox(

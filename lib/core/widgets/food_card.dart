@@ -1,5 +1,4 @@
 import 'package:egycal/core/models/food_details_model.dart';
-import 'package:egycal/core/services/handle_favorites_service.dart';
 import 'package:egycal/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,8 +26,8 @@ class FoodCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  food.engName!.length > 22
-                      ? '${food.engName!.substring(0, 22)}...'
+                  food.engName!.length > 18
+                      ? '${food.engName!.substring(0, 18)}...'
                       : food.engName!,
                   style: TextStyle(
                     color: Colors.white,
@@ -36,7 +35,7 @@ class FoodCard extends StatelessWidget {
                     fontSize: 16.sp,
                   ),
                 ),
-                Text('${food.calories?.toStringAsFixed(1) ?? '--'} cal',
+                Text('${food.calories?.toStringAsFixed(1) ?? '--'} kcal',
                     style: const TextStyle(color: Colors.white70)),
               ],
             ),
