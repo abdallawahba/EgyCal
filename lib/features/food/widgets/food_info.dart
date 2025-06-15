@@ -52,7 +52,7 @@ class _FoodInfoState extends State<FoodInfo> {
                       ],
                     ),
                     Text(
-                      "${widget.food.calories} cal",
+                      "${widget.food.calories} kcal",
                       style: TextStyle(
                         fontSize: 17.sp,
                         color: Colors.white.withOpacity(0.7),

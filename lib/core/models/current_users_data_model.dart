@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:egycal/core/utils/helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CurrentUserDataModel {
@@ -22,6 +21,10 @@ class CurrentUserDataModel {
   int? foodCalories;
   int? age;
   String? greeting;
+  double? goalProteinGrams;
+  double? goalCarbsGrams;
+  double? goalFatsGrams;
+  double? goalWaterL;
 
   CurrentUserDataModel(){
     email = '';
@@ -43,6 +46,11 @@ class CurrentUserDataModel {
     foodCalories = 0;
     age = 0;
     greeting = '';
+    goalProteinGrams = 0;
+    goalCarbsGrams = 0;
+    goalFatsGrams = 0;
+    goalWaterL = 0;
+    fetch();
   }
 
   void calculateAge() {
@@ -90,7 +98,7 @@ class CurrentUserDataModel {
       double? bmr;
       double? activityMultiplier;
       double? calorieAdjustment;
-
+      double waterMultiplier;
       if (gender == "Male") {
         bmr = 10 * weight! + 6.25 * height! - 5 * age! + 5;
       } else if (gender == "Female") {
@@ -100,18 +108,23 @@ class CurrentUserDataModel {
       switch (activity) {
         case 'Sedentary':
           activityMultiplier = 1.2;
+          waterMultiplier = 35;
           break;
         case 'Low Active':
           activityMultiplier = 1.375;
+          waterMultiplier = 37;
           break;
         case 'Active':
           activityMultiplier = 1.55;
+          waterMultiplier = 40;
           break;
         case 'Very Active':
           activityMultiplier = 1.725;
+          waterMultiplier = 45;
           break;
         default:
           activityMultiplier = 1.2;
+          waterMultiplier = 35;
       }
 
       double maintenanceCalories = bmr! * activityMultiplier;
@@ -134,6 +147,25 @@ class CurrentUserDataModel {
       foodCalories = 0;
       progressPercent = double.parse((foodCalories! / baseGoal!).toStringAsFixed(4));
       remaining = baseGoal! - foodCalories!;
+      double proteinPerKg;
+      switch (goal) {
+        case 'Lose Weight':
+          proteinPerKg = 2.0;
+          break;
+        case 'Gain Weight':
+          proteinPerKg = 2.2;
+          break;
+        default:
+          proteinPerKg = 1.8;
+      }
+      goalProteinGrams = double.parse((proteinPerKg * weight!).toStringAsFixed(1));
+      double fatPercentage = (goal == 'Lose Weight') ? 0.25 : 0.3;
+      goalFatsGrams = double.parse(((baseGoal! * fatPercentage) / 9).toStringAsFixed(1));
+      double proteinCalories = goalProteinGrams! * 4;
+      double fatCalories = goalFatsGrams! * 9;
+      double carbCalories = baseGoal! - proteinCalories - fatCalories;
+      goalCarbsGrams = double.parse((carbCalories / 4).toStringAsFixed(1));
+      goalWaterL = double.parse((weight! * waterMultiplier).toStringAsFixed(0))/1000;
     } catch (e) {
       CurrentUserDataModel();
     }
@@ -160,6 +192,10 @@ class CurrentUserDataModel {
       'foodCalories': foodCalories,
       'age': age,
       'greeting': greeting,
+      'goalProteinGrams': goalProteinGrams,
+      'goalCarbsGrams': goalCarbsGrams,
+      'goalFatsGrams': goalFatsGrams,
+      'goalWaterL': goalWaterL,
     };
   }
 
@@ -183,6 +219,9 @@ class CurrentUserDataModel {
     foodCalories = null;
     age = null;
     greeting = null;
+    goalProteinGrams = null;
+    goalCarbsGrams = null;
+    goalFatsGrams = null;
+    goalWaterL = null;
   }
-
 }
