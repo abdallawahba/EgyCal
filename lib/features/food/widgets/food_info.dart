@@ -5,6 +5,7 @@ import '../../../core/services/handle_favorites_service.dart';
 
 class FoodInfo extends StatefulWidget {
   final FoodDetailsModel food;
+
   const FoodInfo({super.key, required this.food});
 
   @override
@@ -16,6 +17,7 @@ class _FoodInfoState extends State<FoodInfo> {
 
   @override
   Widget build(BuildContext context) {
+    bool isAdded = widget.food.foodId!.contains(widget.food.engName!);
     return Container(
       height: 150.h,
       decoration: const BoxDecoration(
@@ -39,7 +41,7 @@ class _FoodInfoState extends State<FoodInfo> {
                     Row(
                       children: [
                         Text(
-                          widget.food.engName.length > 31 ? widget.food.engName.substring(0, 31):  widget.food.engName,
+                          widget.food.engName!.length > 31 ? widget.food.engName!.substring(0, 31):  widget.food.engName!,
                           style: TextStyle(
                             fontSize: 22.sp,
                             fontWeight: FontWeight.bold,
@@ -65,11 +67,11 @@ class _FoodInfoState extends State<FoodInfo> {
             top: 45,
             right: 5,
             child: IconButton(
-              icon: Icon(
+              icon: !isAdded ? Icon(
                 size: 30,
                 isFav ? Icons.favorite : Icons.favorite_border,
                 color: Colors.red.shade700,
-              ),
+              ) : Icon(null),
               onPressed: () async {
                 await handleFavorites(widget.food);
                 setState(() {

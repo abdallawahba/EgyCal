@@ -1,33 +1,33 @@
 class FoodDetailsModel {
-  final String engName;
-  final String foodId;
-  final double? calories;
-  final double? proteins;
-  final double? fats;
-  final double? carbs;
-  final String? servingSize;
-  final double? totalFat;
-  final double? saturatedFat;
-  final double? transFat;
-  final double? polyunsaturatedFat;
-  final double? monounsaturatedFat;
-  final double? cholesterol;
-  final double? sodium;
-  final double? totalCarbohydrate;
-  final double? dietaryFiber;
-  final double? sugars;
-  final double? totalProtein;
-  final double? calcium;
-  final double? iron;
-  final double? potassium;
-  final double? vitaminA;
-  final double? vitaminC;
-  final double? vitaminD;
+   String? engName;
+   String? foodId;
+   double? calories;
+   double? proteins;
+   double? fats;
+   double? carbs;
+   String? servingSize;
+   double? totalFat;
+   double? saturatedFat;
+   double? transFat;
+   double? polyunsaturatedFat;
+   double? monounsaturatedFat;
+   double? cholesterol;
+   double? sodium;
+   double? totalCarbohydrate;
+   double? dietaryFiber;
+   double? sugars;
+   double? totalProtein;
+   double? calcium;
+   double? iron;
+   double? potassium;
+   double? vitaminA;
+   double? vitaminC;
+   double? vitaminD;
   bool isFavorite;
 
   FoodDetailsModel({
-    required this.engName,
-    required this.foodId,
+    this.engName,
+    this.foodId,
     this.calories,
     this.proteins,
     this.fats,
@@ -111,5 +111,73 @@ class FoodDetailsModel {
       'vitaminD': vitaminD,
       'isFavorite': isFavorite,
     };
+  }
+  void assignName(String name) {
+    engName = name;
+  }
+  void assignId(String id) {
+    foodId = id;
+  }
+  void assignCalories(double calories) {
+    this.calories = calories;
+  }
+  void assignProteins(double proteins) {
+    this.proteins = proteins;
+  }
+  void assignFats(double fats) {
+    this.fats = fats;
+  }
+  void assignCarbs(double carbs) {
+    this.carbs = carbs;}
+  void assignServingSize(String servingSize) {
+    this.servingSize = servingSize;
+  }
+  void assignTotalFat(double totalFat) {
+    this.totalFat = totalFat;
+  }
+  void assignSaturatedFat(double saturatedFat) {
+    this.saturatedFat = saturatedFat;}
+  void assignTransFat(double transFat) {
+    this.transFat = transFat;
+  }
+  void assignPolyunsaturatedFat(double polyunsaturatedFat) {
+    this.polyunsaturatedFat = polyunsaturatedFat;
+  }
+  void assignMonounsaturatedFat(double monounsaturatedFat) {
+    this.monounsaturatedFat = monounsaturatedFat;}
+  void assignCholesterol(double cholesterol) {
+    this.cholesterol = cholesterol;
+  }
+  void assignSodium(double sodium) {
+    this.sodium = sodium;}
+  void assignTotalCarbohydrate(double totalCarbohydrate) {
+    this.totalCarbohydrate = totalCarbohydrate;
+  }
+  void assignDietaryFiber(double dietaryFiber) {
+    this.dietaryFiber = dietaryFiber;
+  }
+  void assignSugars(double sugars) {
+    this.sugars = sugars;}
+  void assignTotalProtein(double totalProtein) {
+    this.totalProtein = totalProtein;
+  }
+  void assignCalcium(double calcium) {
+    this.calcium = calcium;
+  }
+  void assignIron(double iron) {
+    this.iron = iron;}
+  void assignPotassium(double potassium) {
+    this.potassium = potassium;
+  }
+  void assignVitaminA(double vitaminA) {
+    this.vitaminA = vitaminA;
+  }
+  void assignVitaminC(double vitaminC) {
+    this.vitaminC = vitaminC;}
+  void assignVitaminD(double vitaminD) {
+    this.vitaminD = vitaminD;
+  }
+  void assignIsFavorite(bool isFavorite) {
+    this.isFavorite = isFavorite;
   }
 }
