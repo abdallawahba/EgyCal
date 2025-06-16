@@ -1,0 +1,2 @@
+C:/Users/user/EgyCal/android/app/.cxx/Debug/6z4h6t10/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/user/EgyCal/android/app/.cxx/Debug/6z4h6t10/armeabi-v7a/CMakeFiles/rebuild_cache.dir

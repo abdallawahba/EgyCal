@@ -1,4 +1,7 @@
 import 'package:egycal/features/add_food/add_food_page.dart';
+import 'package:egycal/features/profile/account_deletion.dart';
+import 'package:egycal/features/profile/acount.dart';
+import 'package:egycal/features/profile/change_password.dart';
 import 'package:flutter/material.dart';
 import '../../features/add_food/added_food_page.dart';
 import '../../features/diary/diary.dart';
@@ -56,6 +59,10 @@ Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
   '/logFood': (context) => const LogFoodPage(),
   '/profile': (context) => const ProfilePage(),
   '/authWrapper': (context) => AuthWrapper(),
+  '/account':(context) => AccountPage(),
+  '/accountDeletion':(context) => AccountDeletion(),
+  '/changePassword':(context) => ChangePasswordPage(),
+
   '/foodDetails': (context) {
     final food = ModalRoute.of(context)!.settings.arguments as FoodDetailsModel;
     return FoodDetailsPage(selectedFood: food);

@@ -10,7 +10,6 @@ class FoodDetailsPage extends StatefulWidget {
      super.key,
      required this.selectedFood,
    });
-
   @override
   State<FoodDetailsPage> createState() => _FoodDetailsPageState();
 }
