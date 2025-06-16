@@ -22,6 +22,8 @@ class _DiaryPageState extends State<DiaryPage> {
         automaticallyImplyLeading: false,
         scrolledUnderElevation: 0,
         title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             avatarImage(
               image: Provider.of<CurrentUserDataModel>(context,

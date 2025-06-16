@@ -1,5 +1,6 @@
-import 'package:egycal/features/profile/widgets/contact_card.dart';
+import 'package:egycal/features/account/widgets/contact_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ContactUs extends StatelessWidget {
   const ContactUs({super.key});
@@ -17,25 +18,25 @@ class ContactUs extends StatelessWidget {
         title: const Text('Contact Us'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => Navigator.pushReplacementNamed(context, '/profile'),
+          onPressed: () => Navigator.pushReplacementNamed(context, '/account'),
         ),
       ),
           body: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: EdgeInsets.only(top: 40.r, left: 20.r, right: 20.r),
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                   style: const TextStyle(
+                   style: TextStyle(
                    color: Color(0xFF6E7179), 
-                 fontSize: 16,
+                 fontSize: 16.sp,
                  fontFamily: 'Inter'
                  ),
                  children: [
                   TextSpan(
                     text: "Don't hesitate to contact us if you find a bug or have a suggestion. "
-                      "We highly appreciate any feedback provided, as it helps us improve your "
+                      "We highly appreciate any feedback provided as it helps us improve your "
                   ),
                   TextSpan(
                     text: 'Calorie tracker',
@@ -47,8 +48,7 @@ class ContactUs extends StatelessWidget {
                  ]
                 )),
               ),
-            SizedBox(height: 50,),
-
+            SizedBox(height:50.h,),
               ContactCard()
             ],
           ),

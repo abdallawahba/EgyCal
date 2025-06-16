@@ -1,9 +1,11 @@
-import 'package:egycal/core/widgets/custom_elevated_button.dart';
-import 'package:egycal/features/profile/widgets/icon_name.dart';
-import 'package:egycal/features/profile/widgets/red_icon.dart';
+import 'package:egycal/core/models/current_users_data_model.dart';
+import 'package:egycal/core/utils/constants.dart';
+import 'package:egycal/features/account/widgets/icon_name.dart';
+import 'package:egycal/features/account/widgets/red_icon.dart';
 import 'package:egycal/features/users_data/widgets/avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -24,28 +26,28 @@ class AccountPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all( 20),
+        padding: EdgeInsets.all(20.r),
         child: Column(
           children: [
             Center(
                 child: AvatarWidget(
-              image: 'assets/images/Ellipse 11.png',
+              image: Provider.of<CurrentUserDataModel>(context, listen: false).avatar,
               onTap: () {},
             )),
             SizedBox(
-              height: 10,
+              height: 10.h,
             ),
             Text(
-              'Ahmed@gmail.com',
+              Provider.of<CurrentUserDataModel>(context, listen: false).email!,
               style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 16,
+                fontFamily: kInterFont,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
               ),
             ),
             //divider
             SizedBox(
-              height: 40,
+              height: 30.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,12 +58,12 @@ class AccountPage extends StatelessWidget {
                   tittle: 'Name',
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(20.r),
                   child: Text(
-                    'Ahmed',
+                    '${Provider.of<CurrentUserDataModel>(context, listen: false).firstName!} ${Provider.of<CurrentUserDataModel>(context, listen: false).lastName!}',
                     style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
+                      fontFamily: kInterFont,
+                      fontSize: 18.sp,
                     ),
                   ),
                 )
@@ -69,23 +71,17 @@ class AccountPage extends StatelessWidget {
             ),
             //divider
             SizedBox(
-              height: 10,
+              height: 10.h,
             ),
             Container(
               color: Colors.black,
-              width: 350,
-              height: 1,
+              width: 350.w,
+              height: 1.h,
             ),
             SizedBox(
-              height: 10,
+              height: 10.h,
             ),
-
             //icons
-            IconName(
-              icon: Icons.lock_reset_rounded,
-              onpress: () => Navigator.pushReplacementNamed(context, '/changePassword'),
-              tittle: 'change password',
-            ),
             RedIcon(
               icon1: Icons.logout_outlined,
               name: 'Logout',
@@ -93,20 +89,9 @@ class AccountPage extends StatelessWidget {
             ),
             RedIcon(
               icon1: Icons.delete_outlined,
-              name: 'Delete Account',
+              name: 'Delete account',
               onpressed: () => Navigator.pushReplacementNamed(context, '/accountDeletion'),
             ),
-            Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).viewInsets.bottom > 0
-                        ? 100.r
-                        : 210.r,
-                    bottom: 15.r),
-                child: CustomElevatedButton(
-                  buttonName: 'Save',
-                  onPressedFun: () {},
-                ),
-              ),
           ],
         ),
       ),
