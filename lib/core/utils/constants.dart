@@ -1,7 +1,6 @@
 import 'package:egycal/features/add_food/add_food_page.dart';
-import 'package:egycal/features/profile/account_deletion.dart';
-import 'package:egycal/features/profile/acount.dart';
-import 'package:egycal/features/profile/change_password.dart';
+import 'package:egycal/features/account/account_deletion.dart';
+import 'package:egycal/features/account/acount.dart';
 import 'package:flutter/material.dart';
 import '../../features/add_food/added_food_page.dart';
 import '../../features/diary/diary.dart';
@@ -9,7 +8,7 @@ import '../../features/favorites/favorites.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/food/food_details.dart';
 import '../../features/food/log_food.dart';
-import '../../features/profile/profile.dart';
+import '../../features/account/profile.dart';
 import '../../features/reports/reports.dart';
 import '../models/food_details_model.dart';
 import '/features/on_boarding/on_boarding_screen.dart';
@@ -61,8 +60,6 @@ Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
   '/authWrapper': (context) => AuthWrapper(),
   '/account':(context) => AccountPage(),
   '/accountDeletion':(context) => AccountDeletion(),
-  '/changePassword':(context) => ChangePasswordPage(),
-
   '/foodDetails': (context) {
     final food = ModalRoute.of(context)!.settings.arguments as FoodDetailsModel;
     return FoodDetailsPage(selectedFood: food);

@@ -1,4 +1,6 @@
+import 'package:egycal/core/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoRow extends StatelessWidget {
   final  String  title;
@@ -10,14 +12,14 @@ class InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 23, horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: 23.r, horizontal: 20.r),
       decoration: BoxDecoration(
           color: Color(0xFFDBFBED), borderRadius: BorderRadius.circular(16)),
       child: Row(
         children: [
-          Text(title, style: TextStyle(fontSize: 14,fontFamily: 'Inter'),),
+          Text(title, style: TextStyle(fontSize: 14.sp,fontFamily: kInterFont),),
           Spacer(flex: 2,),
-          Text(value,style: TextStyle(color: Color(0xFF35CC8C),fontSize: 14,fontFamily: 'Inter'),)
+          Text(value,style: TextStyle(color: kPrimaryColor,fontSize: 14.sp,fontFamily: kInterFont),)
         ],
       ),
     );

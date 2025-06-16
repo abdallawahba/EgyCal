@@ -1,6 +1,6 @@
 //import 'package:egycal/features/favorites/favorites_page.dart';
 //import 'package:egycal/features/food_detailes/presentation/models/food_details_model.dart';
-//import 'package:egycal/features/profile/presentation/screens/profile.dart';
+//import 'package:egycal/features/account/presentation/screens/account.dart';
 //import 'package:egycal/features/search/presentation/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

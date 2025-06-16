@@ -1,5 +1,5 @@
 import 'package:egycal/core/widgets/custom_text.dart';
-import 'package:egycal/features/profile/widgets/bullet_point.dart';
+import 'package:egycal/features/account/widgets/bullet_point.dart';
 import 'package:flutter/material.dart';
 
 class AboutApp extends StatelessWidget {
@@ -17,7 +17,7 @@ class AboutApp extends StatelessWidget {
         title: const Text('About App'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => Navigator.pushReplacementNamed(context, '/profile'),
+          onPressed: () => Navigator.pushReplacementNamed(context, '/account'),
         ),
       ),
           body: Padding(
