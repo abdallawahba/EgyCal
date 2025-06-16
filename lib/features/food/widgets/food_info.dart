@@ -41,6 +41,11 @@ class _FoodInfoState extends State<FoodInfo> {
                     Row(
                       children: [
                         Text(
+
+                          widget.food.engName!.length > 21
+                              ? widget.food.engName!.substring(0, 21)
+                              : widget.food.engName!,
+
                           widget.food.engName!.length > 21 ? widget.food.engName!.substring(0, 21):  widget.food.engName!,
                           style: TextStyle(
                             fontSize: 22.sp,
@@ -67,11 +72,13 @@ class _FoodInfoState extends State<FoodInfo> {
             top: 45,
             right: 5,
             child: IconButton(
-              icon: !isAdded ? Icon(
-                size: 30,
-                isFav ? Icons.favorite : Icons.favorite_border,
-                color: Colors.red.shade700,
-              ) : Icon(null),
+              icon: !isAdded
+                  ? Icon(
+                      size: 30,
+                      isFav ? Icons.favorite : Icons.favorite_border,
+                      color: Colors.red.shade700,
+                    )
+                  : Icon(null),
               onPressed: () async {
                 await handleFavorites(widget.food);
                 setState(() {

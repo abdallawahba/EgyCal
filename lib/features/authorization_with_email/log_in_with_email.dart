@@ -220,7 +220,7 @@ class _LogInWithEmailState extends State<LogInWithEmail> with WidgetsBindingObse
                                     password: passwordController.text,
                                 );
                                 Navigator.pushReplacementNamed(context, '/home');
-                              } on FirebaseAuthException catch (e) {
+                              } on FirebaseAuthException {
                                 showCustomSnackBar('Invalid credentials', context);
                               }
                               _isLoading = false;
