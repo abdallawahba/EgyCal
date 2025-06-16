@@ -19,7 +19,7 @@ class CustomBottomNavBar extends StatelessWidget {
     final newRoute = routes[index];
     if (currentRoute == newRoute) return;
     if (newRoute == '/home' && currentRoute == '/authWrapper') return;
-    Navigator.pushReplacementNamed(context, newRoute);
+    Navigator.pushNamed(context, newRoute);
   }
   @override
   Widget build(BuildContext context) {

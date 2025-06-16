@@ -18,7 +18,7 @@ class AddedFoodPage extends StatelessWidget{
         scrolledUnderElevation: 0,
         centerTitle: true,
         toolbarHeight: 60,
-        title: const Text('Add Food'),
+        title: const Text('Added Food'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pushReplacementNamed(context, '/home'),

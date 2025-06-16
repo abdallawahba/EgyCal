@@ -56,29 +56,50 @@ class FoodDetailsModel {
   factory FoodDetailsModel.fromJson(Map<String, dynamic> json) {
     return FoodDetailsModel(
       engName: json['engName'],
-      foodId: json['food_id'],
-      calories: json['calories'],
-      proteins: json['proteins'],
-      fats: json['fats'],
-      carbs: json['carbs'],
-      servingSize: json['servingSize'],
-      totalFat: json['totalFat'],
-      saturatedFat: json['saturatedFat'],
-      transFat: json['transFat'],
-      polyunsaturatedFat: json['polyunsaturatedFat'],
-      monounsaturatedFat: json['monounsaturatedFat'],
-      cholesterol: json['cholesterol'],
-      sodium: json['sodium'],
-      totalCarbohydrate: json['totalCarbohydrate'],
-      dietaryFiber: json['dietaryFiber'],
-      sugars: json['sugars'],
-      totalProtein: json['totalProtein'],
-      calcium: json['calcium'],
-      iron: json['iron'],
-      potassium: json['potassium'],
-      vitaminA: json['vitaminA'],
-      vitaminC: json['vitaminC'],
-      vitaminD: json['vitaminD'],
+      foodId: (json['food_id'] ?? json['foodId'])?.toString(),
+      calories: double.tryParse(json['calories']?.toString() ?? '0'),
+      proteins: double.tryParse(json['proteins']?.toString() ?? '0'),
+      fats: double.tryParse(json['fats']?.toString() ?? '0'),
+      carbs: double.tryParse(json['carbs']?.toString() ?? '0'),
+      servingSize: json['servingSize']?.toString() ?? '100 g',
+      totalFat: double.tryParse(
+          (json['totalFat'] ?? json['totalFat(g)'])?.toString() ?? '0'),
+      saturatedFat: double.tryParse(
+          (json['saturatedFat'] ?? json['saturatedFat(g)'])?.toString() ?? '0'),
+      transFat: double.tryParse(
+          (json['transFat'] ?? json['transFat(g)'])?.toString() ?? '0'),
+      polyunsaturatedFat: double.tryParse(
+          (json['polyunsaturatedFat'] ?? json['polyunsaturatedFat(g)'])
+                  ?.toString() ??
+              '0'),
+      monounsaturatedFat: double.tryParse(
+          (json['monounsaturatedFat'] ?? json['monounsaturatedFat(g)'])
+                  ?.toString() ??
+              '0'),
+      cholesterol: double.tryParse(
+          (json['cholesterol'] ?? json['cholesterol(mg)'])?.toString() ?? '0'),
+      sodium:
+          double.tryParse((json['sodium'] ?? json['sodium(mg)'])?.toString() ?? '0'),
+      totalCarbohydrate: double.tryParse(
+          (json['totalCarbohydrate'] ?? json['totalCarb(g)'])?.toString() ??
+              '0'),
+      dietaryFiber:
+          double.tryParse(json['dietaryFiber']?.toString() ?? '0'),
+      sugars:
+          double.tryParse((json['sugars'] ?? json['sugars(g)'])?.toString() ?? '0'),
+      totalProtein: double.tryParse(
+          (json['totalProtein'] ?? json['totalProtein(g)'])?.toString() ?? '0'),
+      calcium: double.tryParse(
+          (json['calcium'] ?? json['calcium(mg)'])?.toString() ?? '0'),
+      iron: double.tryParse((json['iron'] ?? json['iron(mg)'])?.toString() ?? '0'),
+      potassium: double.tryParse(
+          (json['potassium'] ?? json['potassium(mg)'])?.toString() ?? '0'),
+      vitaminA: double.tryParse(
+          (json['vitaminA'] ?? json['vitaminA(mg)'])?.toString() ?? '0'),
+      vitaminC: double.tryParse(
+          (json['vitaminC'] ?? json['vitaminC(mg)'])?.toString() ?? '0'),
+      vitaminD: double.tryParse(
+          (json['vitaminD'] ?? json['vitaminD(mg)'])?.toString() ?? '0'),
       isFavorite: json['isFavorite'] ?? false,
     );
   }
