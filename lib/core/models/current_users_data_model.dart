@@ -148,13 +148,12 @@ class CurrentUserDataModel extends ChangeNotifier {
       double? bmr;
       double? activityMultiplier;
       double? calorieAdjustment;
-      double waterMultiplier;
+      double? waterMultiplier;
       if (gender == "Male") {
         bmr = 10 * weight! + 6.25 * height! - 5 * age! + 5;
       } else if (gender == "Female") {
         bmr = 10 * weight! + 6.25 * height! - 5 * age! - 161;
       }
-
       switch (activity) {
         case 'Sedentary':
           activityMultiplier = 1.2;
@@ -250,28 +249,6 @@ class CurrentUserDataModel extends ChangeNotifier {
   }
 
   void clean(){
-    email = null;
-    firstName = null;
-    lastName = null;
-    day = null;
-    month = null;
-    year = null;
-    goal = null;
-    gender = null;
-    activity = null;
-    height = null;
-    weight = null;
-    avatar = null;
-    usingGoogle = false;
-    baseGoal = null;
-    progressPercent = null;
-    remaining = null;
-    foodCalories = null;
-    age = null;
-    greeting = null;
-    goalProteinGrams = null;
-    goalCarbsGrams = null;
-    goalFatsGrams = null;
-    goalWaterL = null;
+    CurrentUserDataModel();
   }
 }

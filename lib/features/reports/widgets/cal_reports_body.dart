@@ -86,23 +86,31 @@ class CaloriesReportBody extends StatelessWidget {
         ),
         CalRecord(
           date: DateTime.now(),
-          calories: 2000,
-        ),
-        CalRecord(
-          date: DateTime.now(),
-          calories: 2050,
-        ),
-        CalRecord(
-          date: DateTime.now(),
-          calories: 2500,
-        ),
-        CalRecord(
-          date: DateTime.now(),
-          calories: 2200,
-        ),
-        CalRecord(
-          date: DateTime.now(),
           calories: 1900,
+        ),
+        CalRecord(
+          date: DateTime.now().subtract(Duration(days: 1)),
+          calories: 1800,
+        ),
+        CalRecord(
+          date: DateTime.now().subtract(Duration(days: 2)),
+          calories: 1100,
+        ),
+        CalRecord(
+          date: DateTime.now().subtract(Duration(days: 3)),
+          calories: 1200,
+        ),
+        CalRecord(
+          date: DateTime.now().subtract(Duration(days: 4)),
+          calories: 1250,
+        ),
+        CalRecord(
+          date: DateTime.now().subtract(Duration(days: 5)),
+          calories: 900,
+        ),
+        CalRecord(
+          date: DateTime.now().subtract(Duration(days: 6)),
+          calories: 1250,
         ),
       ],
     );
