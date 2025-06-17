@@ -129,7 +129,7 @@ class _LogInWithEmailState extends State<LogInWithEmail> with WidgetsBindingObse
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pushReplacementNamed(context, '/welcome')
           ),
         ),
         body: GestureDetector(

@@ -76,7 +76,7 @@ class _HeightState extends State<Height> {
                       final userData = Provider.of<UserDataModel>(context, listen: false).toMap();
                       Provider.of<CurrentUserDataModel>(context, listen: false).fetch();
                       await FirebaseFirestore.instance.collection('users').doc(uid).set(userData);
-                      Navigator.pushReplacementNamed(context, '/home');
+                      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
                       Provider.of<UserDataModel>(context, listen: false).clean();
                     } catch (e) {
                       showCustomSnackBar('Unexpected error has occurred', context);

@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 class CaloriesReportBody extends StatelessWidget {
   const CaloriesReportBody({super.key});
-
   @override
   Widget build(BuildContext context) {
     return ListView(

@@ -17,7 +17,6 @@ Future<WeeklyCaloriesData> getWeeklyCalories(String userId) async {
     String formattedDate =
         "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
     int dayIndex = 6 - i;
-
     try {
       DocumentSnapshot documentSnapshot = await firestore
           .collection('users')
