@@ -60,7 +60,6 @@ class CalorieIntake extends StatelessWidget {
                 ],
               ),
             ),
-            // Rest of the texts...
             Padding(
               padding: EdgeInsets.only(left: 10.r, top: 25.r),
               child: Text(
@@ -75,7 +74,7 @@ class CalorieIntake extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 15.r),
               child: Text(
-                '${Provider.of<CurrentUserDataModel>(context).progressPercent! * 100}%',
+                '${(Provider.of<CurrentUserDataModel>(context).progressPercent! * 100).toStringAsFixed(2)}%',
                 style: TextStyle(
                   fontSize: 45.sp,
                   fontFamily: kRobotoFont,
@@ -119,7 +118,6 @@ class CalorieIntake extends StatelessWidget {
       ),
       ],
     ),
-
     ),
     );
   }

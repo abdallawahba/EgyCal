@@ -26,7 +26,7 @@ class NutrientsIndicator extends StatelessWidget {
                   child: NutrientRow(
                     nutrientRowModel: NutrientRowModel(
                         label: 'Proteins (g)',
-                        value: 0,
+                        value: Provider.of<CurrentUserDataModel>(context,listen: false).foodProteins!,
                         goal: Provider.of<CurrentUserDataModel>(context).goalProteinGrams!.toInt(),
                         color: Colors.red),
                   ),
@@ -37,7 +37,7 @@ class NutrientsIndicator extends StatelessWidget {
                   child: NutrientRow(
                     nutrientRowModel: NutrientRowModel(
                         label: 'Fats (g)',
-                        value: 0,
+                        value: Provider.of<CurrentUserDataModel>(context,listen: false).foodFats!,
                         goal: Provider.of<CurrentUserDataModel>(context).goalFatsGrams!.toInt(),
                         color: Colors.orange),
                   ),
@@ -47,7 +47,7 @@ class NutrientsIndicator extends StatelessWidget {
                   child: NutrientRow(
                     nutrientRowModel: NutrientRowModel(
                         label: 'Carbs (g)',
-                        value: 0,
+                        value: Provider.of<CurrentUserDataModel>(context,listen: false).foodCarbs!,
                         goal: Provider.of<CurrentUserDataModel>(context).goalCarbsGrams!.toInt(),
                         color: Colors.greenAccent),
                   ),
@@ -58,7 +58,7 @@ class NutrientsIndicator extends StatelessWidget {
             NutrientRow(
               nutrientRowModel: NutrientRowModel(
                   label: 'Calories',
-                  value: 0,
+                  value: Provider.of<CurrentUserDataModel>(context,listen: false).foodCalories!,
                   goal: Provider.of<CurrentUserDataModel>(context).baseGoal!,
                   color: Colors.green),
             ),
