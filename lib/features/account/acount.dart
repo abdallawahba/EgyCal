@@ -3,8 +3,10 @@ import 'package:egycal/core/utils/constants.dart';
 import 'package:egycal/features/account/widgets/icon_name.dart';
 import 'package:egycal/features/account/widgets/red_icon.dart';
 import 'package:egycal/features/users_data/widgets/avatar_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class AccountPage extends StatelessWidget {
@@ -85,12 +87,15 @@ class AccountPage extends StatelessWidget {
             RedIcon(
               icon1: Icons.logout_outlined,
               name: 'Logout',
-              onpressed: () {},
-            ),
-            RedIcon(
-              icon1: Icons.delete_outlined,
-              name: 'Delete account',
-              onpressed: () => Navigator.pushReplacementNamed(context, '/accountDeletion'),
+              onpressed: () async {
+                await FirebaseAuth.instance.signOut();
+                final googleSignIn = GoogleSignIn();
+                if (await googleSignIn.isSignedIn()) {
+                  await googleSignIn.signOut();
+                }
+                Provider.of<CurrentUserDataModel>(context, listen: false).clean();
+                Navigator.of(context).pushNamedAndRemoveUntil('/authWrapper', (route) => false,);
+              },
             ),
           ],
         ),
