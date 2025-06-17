@@ -250,6 +250,6 @@ class CurrentUserDataModel extends ChangeNotifier {
 
   void clean(){
     CurrentUserDataModel();
-    notifyListeners();
+    //notifyListeners();
   }
 }
