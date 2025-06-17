@@ -22,7 +22,7 @@ class _CaloriesWheelState extends State<CaloriesWheel> {
       animationDuration: 1000,
       radius: 80,
       lineWidth: 8,
-      percent:Provider.of<CurrentUserDataModel>(context).progressPercent!,
+      percent:Provider.of<CurrentUserDataModel>(context).progressPercent! <= 1 ? Provider.of<CurrentUserDataModel>(context).progressPercent! : 1,
       progressColor: Colors.white,
       backgroundColor: kSecondaryColor,
       circularStrokeCap: CircularStrokeCap.round,
