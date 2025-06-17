@@ -9,7 +9,7 @@ import '../../features/home/home_screen.dart';
 import '../../features/food/food_details.dart';
 import '../../features/food/log_food.dart';
 import '../../features/account/profile.dart';
-import '../../features/reports/reports.dart';
+import '../../features/reports/reports_page.dart';
 import '../models/food_details_model.dart';
 import '/features/on_boarding/on_boarding_screen.dart';
 import '/features/authorization_with_email/log_in_with_email.dart';

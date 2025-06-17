@@ -10,7 +10,8 @@ class AvatarWidget extends StatelessWidget {
     super.key,
     this.image,
     required this.onTap,
-    this.isSelected = false,
+    this.isSelected = false, 
+    // required Null Function() ontap,
   });
 
   @override
