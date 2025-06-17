@@ -19,25 +19,23 @@ class EgyCal extends StatelessWidget {
   const EgyCal({super.key});
   @override
   Widget build(BuildContext context) {
-    UserDataModel usersData = UserDataModel();
-    CurrentUserDataModel currentUsersData = CurrentUserDataModel();
-    return ScreenUtilInit(
-      designSize: Size(393, 852),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return MultiProvider(
-          providers: [
-            Provider(create: (_) => usersData),
-            Provider(create: (_) => currentUsersData),
-          ],
-          child: MaterialApp(
+    return MultiProvider(
+      providers: [
+        Provider(create: (_) => UserDataModel()),
+        ChangeNotifierProvider(create: (_) => CurrentUserDataModel()),
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(393, 852),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MaterialApp(
             debugShowCheckedModeBanner: false,
             initialRoute: '/splash',
             routes: routes,
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

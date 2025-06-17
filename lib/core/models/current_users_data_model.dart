@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:egycal/core/services/retrieve_logged_food_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'food_details_model.dart';
 
-class CurrentUserDataModel {
+class CurrentUserDataModel extends ChangeNotifier {
   bool? usingGoogle;
   String? email;
   String? firstName;
@@ -19,12 +22,16 @@ class CurrentUserDataModel {
   double? progressPercent;
   int? remaining;
   int? foodCalories;
+  int? foodProteins;
+  int? foodFats;
+  int? foodCarbs;
   int? age;
   String? greeting;
   double? goalProteinGrams;
   double? goalCarbsGrams;
   double? goalFatsGrams;
   double? goalWaterL;
+  List<FoodDetailsModel>? loggedFood;
 
   CurrentUserDataModel(){
     email = '';
@@ -44,12 +51,16 @@ class CurrentUserDataModel {
     progressPercent = 0;
     remaining = 0;
     foodCalories = 0;
+    foodProteins = 0;
+    foodFats = 0;
+    foodCarbs = 0;
     age = 0;
     greeting = '';
     goalProteinGrams = 0;
     goalCarbsGrams = 0;
     goalFatsGrams = 0;
     goalWaterL = 0;
+    loggedFood = [];
     fetch();
   }
 
@@ -72,6 +83,43 @@ class CurrentUserDataModel {
       greeting = 'Good evening';
     }
   }
+  void calculateLoggedFoodInfo(List<FoodDetailsModel> loggedFood) {
+    double tempFoodCalories = 0;
+    double tempFoodProteins = 0;
+    double tempFoodFats = 0;
+    double tempFoodCarbs = 0;
+    for (var food in loggedFood) {
+      if (food.quantity == null || food.quantity == 0) continue;
+      double calories = food.calories ?? 0;
+      double proteins = food.proteins ?? 0;
+      double fats = food.fats ?? 0;
+      double carbs = food.carbs ?? 0;
+      double quantity = food.quantity!;
+      double itemCalories;
+      double itemProteins;
+      double itemFats;
+      double itemCarbs;
+      if (food.servingSize == '100 g') {
+        itemCalories = (calories / 100) * quantity;
+        itemProteins = (proteins / 100) * quantity;
+        itemFats = (fats / 100) * quantity;
+        itemCarbs = (carbs / 100) * quantity;
+      } else {
+        itemCalories = calories * quantity;
+        itemProteins = proteins * quantity;
+        itemFats = fats * quantity;
+        itemCarbs = carbs * quantity;
+      }
+      tempFoodCalories += itemCalories;
+      tempFoodProteins += itemProteins;
+      tempFoodFats += itemFats;
+      tempFoodCarbs += itemCarbs;
+    }
+    foodCalories = tempFoodCalories.round();
+    foodProteins = tempFoodProteins.round();
+    foodFats = tempFoodFats.round();
+    foodCarbs = tempFoodCarbs.round();
+  }
 
   Future<void> fetch() async {
     try {
@@ -93,6 +141,8 @@ class CurrentUserDataModel {
       height = data['height'];
       weight = data['weight'];
       avatar = data['avatar'];
+      loggedFood = await getLoggedFoodOnce();
+      calculateLoggedFoodInfo(loggedFood!);
       calculateAge();
       getGreeting();
       double? bmr;
@@ -144,8 +194,7 @@ class CurrentUserDataModel {
       }
 
       baseGoal = (maintenanceCalories + calorieAdjustment).toInt();
-      foodCalories = 0;
-      progressPercent = double.parse((foodCalories! / baseGoal!).toStringAsFixed(4));
+      progressPercent = (baseGoal == 0) ? 0 : double.parse((foodCalories! / baseGoal!).toStringAsFixed(4));
       remaining = baseGoal! - foodCalories!;
       double proteinPerKg;
       switch (goal) {
@@ -169,6 +218,7 @@ class CurrentUserDataModel {
     } catch (e) {
       CurrentUserDataModel();
     }
+    notifyListeners();
   }
 
   Map<String, dynamic> toMap(){

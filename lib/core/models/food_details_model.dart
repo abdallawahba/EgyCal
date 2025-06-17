@@ -23,7 +23,8 @@ class FoodDetailsModel {
    double? vitaminA;
    double? vitaminC;
    double? vitaminD;
-  bool isFavorite;
+   double? quantity;
+   bool isFavorite;
 
   FoodDetailsModel({
     this.engName,
@@ -51,6 +52,7 @@ class FoodDetailsModel {
     this.vitaminC,
     this.vitaminD,
     this.isFavorite = false,
+    this.quantity = 0,
   });
 
   factory FoodDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -101,6 +103,7 @@ class FoodDetailsModel {
       vitaminD: double.tryParse(
           (json['vitaminD'] ?? json['vitaminD(mg)'])?.toString() ?? '0'),
       isFavorite: json['isFavorite'] ?? false,
+      quantity: double.tryParse(json['quantity']?.toString() ?? '0'),
     );
   }
 
@@ -131,6 +134,7 @@ class FoodDetailsModel {
       'vitaminC': vitaminC,
       'vitaminD': vitaminD,
       'isFavorite': isFavorite,
+      'quantity': quantity,
     };
   }
   void assignName(String name) {
@@ -200,5 +204,8 @@ class FoodDetailsModel {
   }
   void assignIsFavorite(bool isFavorite) {
     this.isFavorite = isFavorite;
+  }
+  void assignQuantity(double quantity) {
+    this.quantity = quantity;
   }
 }

@@ -1,20 +1,30 @@
+import 'package:egycal/core/models/current_users_data_model.dart';
 import 'package:egycal/core/widgets/bottom_nav_bar.dart';
 import 'package:egycal/features/home/widgets/calorie_intake.dart';
 import 'package:egycal/features/home/widgets/cards.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [CalorieIntake(), gridViewCards(context)],
+    return GestureDetector(
+      onVerticalDragUpdate: (details) {
+        if (details.delta.dy > 0) {
+          Provider.of<CurrentUserDataModel>(context,listen: false).fetch();
+          Navigator.pushReplacementNamed(context, '/home');
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+          children: [CalorieIntake(), gridViewCards(context)],
+        ),
+        bottomNavigationBar: CustomBottomNavBar(),
       ),
-      bottomNavigationBar: CustomBottomNavBar(),
     );
   }
 
