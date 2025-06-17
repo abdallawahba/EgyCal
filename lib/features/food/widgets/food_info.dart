@@ -41,9 +41,8 @@ class _FoodInfoState extends State<FoodInfo> {
                     Row(
                       children: [
                         Text(
-
-                          widget.food.engName!.length > 21
-                              ? widget.food.engName!.substring(0, 21)
+                          widget.food.engName!.length > 18
+                              ? widget.food.engName!.substring(0, 18)
                               : widget.food.engName!,
                           style: TextStyle(
                             fontSize: 22.sp,

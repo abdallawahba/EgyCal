@@ -129,9 +129,8 @@ class _WelcomeState extends State<Welcome> {
               bottom: 115.h,
               left: 25.w,
               child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/logInWithEmail');
-
+                  onPressed: (){
+                    Navigator.pushReplacementNamed(context, '/logInWithEmail');
                     Provider.of<UserDataModel>(context, listen: false)
                         .usingGoogle = true;
                   },
